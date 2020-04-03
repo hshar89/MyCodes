@@ -1,0 +1,229 @@
+To create a branch from existing branch 
+Existing branch - Branch1
+New branch to create - subbranch_of_b1
+1)git checkout branch1
+2)git checkout -b subbranch_of_b1 branch1
+
+To push the current branch and set the remote as upstream, use
+
+    git push --set-upstream origin feature/DASH_SomeBranch_ToMerge
+Git branch --set-upstream-to origin/feature/BranchName BranchName
+
+Reset password for repo 
+
+git config --global --unset credential.helper
+git config --system --unset credential.helper
+
+To create a dir structure - 
+mkdir C:\javaindepth\src\com\semanticsquare\basics
+To change directory
+Cd C:\javaindepth\src\com\semanticsquare\basics
+
+To look at source code of a class - 
+GrepCode  -  search for the required class
+
+To look at byte code 
+Cmd - 
+Javap ~v BasicsDemo.class
+
+
+To get serialVersionUID for a serializable class -
+In command prompt run the below ->
+serialver com.semanticsquare.io.IODemo$SerializableDemo
+
+To set classpath - 
+set classpath=C:\javaindepth\src\com\semanticsquare
+Run from a specific directory
+javac com\semanticsquare\basics\BasicsDemo.java
+To clear classpath for that session -
+Set classpath=
+
+
+Java passing arguments for GC
+-Xms2m -Xmx12m -XX:+PrintGCDetails -XX:+UseSerialGC -XX:MaxNewSize=1m
+
+-Xms2m - min heap size
+-Xmx12m = max heap size
+-XX:+PrintGCDetails = prints gc process details
+-XX:+UseSerialGC - use serial GC version
+-XX:MaxNewSize - Reduces the young generation GC size to 1mb
+
+
+9:25 PM
+
+Doing rounds, shots with heavy beats. Turns into a lively chatter and in this jabber one person goes missing. Guess who?
+I am a wise-crack who is looking for a horror flick partner. There are pinches of sweetness and charm, as my friends say it. I have been trying to maximize experiences, exploring uncharted territories along with my baggage of love for the clichés (rides, treks, mountains, 90s music).  
+I love my heroes but I enact my villains better. Aiming to be a bibliophile.  
+
+I still cannot understand why do characters shout before attacking in stealth.
+A wisecrack who is looking for a partner to enjoy horror flicks with. A wannabe bibliophile who carries a love for intellectual conversations and
+
+Add a sarcastic appetite with an adventurous spirit. Mix these with affection and ambition. 
+A wisecrack with high level of ambitions. Loves intellectual conversations. Prefers a balance of rational and emotional. 
+I have been trying to maximize experiences, exploring uncharted territories along with my baggage of love for clichés (rides, treks, mountains, 90s music).
+Doting for enacting villains and a streak for mimicry. Aims to be a bibliophile!!    
+
+Give me a clone and I will sneak of in middle of the night and let the clone do my bidding for the rest (every house party :p).
+Coffee Red hot chilli pepper for the arctic monkey on a weeknd
+Change begins at the end of your comfort zone.
+Looking for a witch which bewitches this warlock and banishes this app to where-ever the hell it came from!!
+
+Frankness and sarcasm is what attracts me to people. 
+A passionate wisecrack who has a rather dominant rational side than emotional. 
+
+You have a deep interest and passion for technology. You love owning new responsibilities and enjoy working with people who will keep challenging you at every stage. You have strong problem solving, analytic, decision-making and excellent communication with interpersonal skills. You are self-driven and motivated with entrepreneurial passion and desire to work in a fast-paced, resultsdriven agile environment with varied responsibilities. You have a passion to mentor and drive
+technical associates to deliver quality products in an agile environment. You have a flair to setup new process and bring in a innovative mindset to drive the team.
+
+
+Transaction Successful!
+Transaction Number	202003281011772
+Name	Mr. Harsh Sharma
+Amount	₹1000.00
+Email	harsh1996.007@gmail.com
+Mobile	8058050246
+Payment Status	Successful
+Bank Id	SM2
+Bank Reference Id	318809
+Bank Transaction Id	SSM28660976434
+Date	28-03-2020 13:46:22
+Note: Your payment has been successful. Please wait for 3 working days to download formal receipt. Please note that an acknowledgement of the transaction has been sent on your given email/mobile or can be downloaded from Transaction History. The PAN number of PMNRF is XXXXXX637Q In case of any query, please email to pmnrf@gov.in, quoting the PMNRF transaction number 202003281011772
+Click here to check your Transaction History OR return to Donation Page
+
+Java fx vm argument- 
+--module-path "C:\Users\harshsharma3\Downloads\Common Jar folder\javafx-sdk-13.0.1\lib" --add-modules javafx.controls,javafx.fxml
+
+Scope resolution Operator - (::)
+1) To access a global variable when there is a local variable with same name:
+int x;  // Global x 
+   
+int main() 
+{ 
+  int x = 10; // Local x 
+  cout << "Value of global x is " << ::x; 
+  cout << "\nValue of local x is " << x;   
+  return 0; 
+} 
+2)To define a function outside a class.
+class A  
+{ 
+public:  
+  
+   // Only declaration 
+   void fun(); 
+}; 
+void A::fun() 
+{ 
+   cout << "fun() called"; 
+} 
+3)To access a class’s static variables
+class Test 
+{ 
+    static int x;   
+public: 
+    static int y;    
+  
+    // Local parameter 'a' hides class member 
+    // 'a', but we can access it using :: 
+    void func(int x)   
+    {  
+       // We can access class's static variable 
+       // even if there is a local variable 
+       cout << "Value of static x is " << Test::x; 
+  
+       cout << "\nValue of local x is " << x;   
+    } 
+}; 
+int Test::x = 1; 
+int Test::y = 2; 
+####################################  
+int main() 
+{ 
+    Test obj; 
+    int x = 3 ; 
+    obj.func(x); 
+   
+    cout << "\nTest::y = " << Test::y; 
+  
+    return 0; 
+} 
+4) In case of multiple Inheritance:
+If same variable name exists in two ancestor classes, we can use scope resolution operator to distinguish.
+5)
+class A 
+{ 
+    int x; 
+public: 
+    A() { cout << "A's constructor called " << endl;  } 
+}; 
+  
+class B 
+{ 
+    static A a; 
+public: 
+    B() { cout << "B's constructor called " << endl; } 
+    static A getA() { return a; } 
+}; 
+  
+A B::a;  // definition of a 
+  
+int main() 
+{ 
+    B b1, b2, b3; 
+    A a = b1.getA(); 
+  
+    return 0; 
+} 
+
+For map traversal in cpp -->
+
+ for (auto i = m.begin(); i != m.end(); ++i) 
+        cout << i->second << " "; 
+// TreeMap which stores key value pair 
+    // sorted on key value 
+    map<int, int> m;
+##############################
+Way to push data into map - 
+unordered_map<int,vector<int> > getChild;
+    for(int i=0;i<n;i++)
+    {
+        getChild[arr[i]].push_back(i);
+    }
+#############################
+Way to push data in vector ->
+vector<Node*> nodes;
+ nodes.push_back(temp);
+############################
+ unordered_set<string> stringSet; 
+stringSet.insert("code");
+unordered_set<string> :: iterator itr; 
+    for (itr = stringSet.begin(); itr != stringSet.end(); itr++) 
+        cout << (*itr) << endl; 
+##############################
+Void pointer can store address of any data type 
+Int a = 10;
+Char b = 'x';
+Void* p = &a;
+P = &b;
+
+Int main(){
+Int a = 10;
+Void* p = &a;
+Printf("%d",*p) --> throws error
+Printf("%d",*(int *)p) --> prints 10 because knows the size to print
+Int a[2] = {1, 2};
+Void* p = &a;
+P = p +sizeof(int);
+Printf("%d",*(int*)p) --> 2
+
+Malloc and calloc returns void * type and this allws these functions to be used to allocate memory of any data type
+###########################
+Use scanf to pick elements -
+Int n;
+Scanf("%d",&n);
+Int m, t;
+Char a;
+Scanf("%d %d %c",&m,&t,&a);
+##########################
+Size of array - int size = *(&arr + 1) - arr;
+Size of  array -->
+int size = sizeof(arr)/sizeof(arr[0]);
