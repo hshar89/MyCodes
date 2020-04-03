@@ -1,0 +1,2935 @@
+##############################################################
+New way to read input
+BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
+
+        int n = Integer.parseInt(bufferedReader.readLine().trim());
+
+        List<List<Integer>> arr = new ArrayList<>();
+
+        IntStream.range(0, n).forEach(i -> {
+            try {
+                arr.add(
+                    Stream.of(bufferedReader.readLine().replaceAll("\\s+$", "").split(" "))
+                        .map(Integer::parseInt)
+                        .collect(toList())
+                );
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+
+        int result = Result.diagonalDifference(arr);
+####################################################################
+
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+class GFG
+ {
+	public static void main (String[] args)
+	 {
+	 //code
+	 Scanner in = new Scanner(System.in);
+	 int numberOfCases=in.nextInt();
+	 in.nextLine();
+	 while(numberOfCases-- >0){
+	  
+	  String sumArr = in.nextLine();
+	  String[] ar1 = sumArr.trim().split(" ");
+	  String arrStr = in.nextLine();
+	  String[] ar2 = arrStr.trim().split(" ");
+	 
+	 int arr[] = new int[ar2.length];
+	 for(int i=0;i<ar2.length;i++){
+	     arr[i] = Integer.parseInt(ar2[i]);
+	 }
+	 
+	 int sum=0;
+	 int sumReq=Integer.parseInt(ar1[1]);
+	 int startIndex = 0;
+	 int endIndex = 0;
+	 int j=0;
+	 outer:
+	 for(int i=0;i<arr.length;i++){
+	     j=i;
+	     startIndex = i;
+	     sum = 0;
+	 while(sum<sumReq && j<arr.length){
+	   sum += arr[j];
+	    if(sumReq == sum){
+	        endIndex = j;
+	        break outer;
+	    }
+	    j++;
+	 }
+	 
+	 }
+	 if(endIndex == 0){
+	   System.out.println("-1");  
+	 }else{
+	   System.out.println((startIndex+1)+" "+(endIndex+1));  
+	 }
+	 }
+	 }
+}
+///////////////////////////////////////////////////////////////////////////////
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+class GFG
+ {
+	public static void main (String[] args)
+	 {
+	 //code
+	 Scanner sc = new Scanner(System.in);
+	 int numOfTests = sc.nextInt();
+	 sc.nextLine();
+	 while(numOfTests-- >0){
+	     int sizeOfinput = sc.nextInt();
+	     sc.nextLine();
+	     String[] sarr = sc.nextLine().trim().split(" ");
+	     int [] arr = new int [sarr.length];
+         for(int i=0; i<sizeOfinput; i++) {
+         arr[i] = Integer.parseInt(sarr[i]);
+      }
+      sortArray(arr,0,sizeOfinput-1);
+      printArray(arr);
+	 }
+	 }
+	static void printArray(int arr[]) 
+    { 
+        int n = arr.length; 
+        for (int i=0; i<n; ++i) 
+            System.out.print(arr[i] + " "); 
+        System.out.println(); 
+    } 
+	 public static void sortArray(int[] arr,int l,int r){
+	     if(l<r){
+	     int m = (r+l)/2;
+	     sortArray(arr,l,m);
+	     sortArray(arr,m+1,r);
+	     mergeArray(arr,l,m,r);
+	     }
+	 }
+	 public static void mergeArray(int[]arr,int l,int m, int r){
+	     int n1 = m-l+1;
+	     int n2 = r-m;
+	     int[] L = new int[n1];
+	     int[] R = new int[n2];
+	     for(int i=0;i<n1;i++){
+	         L[i] = arr[l+i];
+	     }
+	     for(int i=0;i<n2;i++){
+	         R[i] = arr[m+1+i];
+	     }
+	     int i=0,j=0;
+	     int k=l;
+	     while(i<n1 && j<n2){
+	         if(L[i]<=R[j]){
+	             arr[k] = L[i];
+	             i++;
+	         }else{
+	             arr[k] = R[j];
+	             j++;
+	         }
+	         k++;
+	     }
+	     while(i<n1){
+	         arr[k] = L[i];
+	         i++;
+	         k++;
+	     }
+	     while(j<n2){
+	         arr[k] = R[j];
+	         j++;
+	         k++;
+	     }
+	 }
+}
+/////////////////////////////////////////////
+Quick sortArray
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+class GFG
+ {
+	public static void main (String[] args)
+	 {
+	 //code
+	 Scanner sc = new Scanner(System.in);
+	 int numOfTests = sc.nextInt();
+	 sc.nextLine();
+	 while(numOfTests-- >0){
+	     int sizeOfinput = sc.nextInt();
+	     sc.nextLine();
+	     String[] sarr = sc.nextLine().trim().split(" ");
+	     int [] arr = new int [sarr.length];
+         for(int i=0; i<sizeOfinput; i++) {
+         arr[i] = Integer.parseInt(sarr[i]);
+      }
+      quickSort(arr,0,sizeOfinput-1);
+      printArray(arr);
+	 }
+	 }
+	static void printArray(int arr[]) 
+    { 
+        int n = arr.length; 
+        for (int i=0; i<n; ++i) 
+            System.out.print(arr[i] + " "); 
+        System.out.println(); 
+    } 
+    static void swap(int[] arr,int i,int j){
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+	static void quickSort(int[] arr, int low, int high){
+	    if(low>=high){
+	        return;
+	    }
+	    int pivot = arr[high];
+	    int i=low;
+	    int greaterIndex = high;
+	    int lowerIndex = low;
+	    while(i<=greaterIndex){
+	        if(arr[i]<pivot){
+	            swap(arr,lowerIndex++,i++);
+	        }else if(arr[i]>pivot){
+	            swap(arr,i,greaterIndex--);
+	        }else{
+	            i++;
+	        }
+	    }
+	   quickSort(arr,low,lowerIndex-1);
+	   quickSort(arr,greaterIndex+1,high);
+	}
+}
+///////////////////////////////////////////////////////
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+class GFG
+ {
+	public static void main (String[] args)throws IOException
+	 {
+	 //code
+	BufferedReader br = new BufferedReader(new InputStreamReader(System.in)); 
+	 int t = Integer.parseInt(br.readLine());
+	 
+	 while(t-- >0){
+	     int sizeOfinput = Integer.parseInt(br.readLine());
+	     int [] arr = new int [sizeOfinput];
+	     String line = br.readLine(); 
+         String[] strs = line.trim().split("\\s+"); 
+	     
+         for(int i=0; i<sizeOfinput; i++) {
+         arr[i] = Integer.parseInt(strs[i]);
+      }
+      quickSort(arr,sizeOfinput);
+      printArray(arr);
+	 }
+	  br.close(); 
+	 }
+	static void printArray(int arr[]) 
+    { 
+        int n = arr.length; 
+        for (int i=0; i<n; ++i) 
+            System.out.print(arr[i] + " "); 
+        System.out.println(); 
+    } 
+	static void quickSort(int[] arr, int n){
+	     
+	    for(int i=1;i<n;i++){
+	        int key = arr[i];
+	        int j = i-1;
+	        while(j>=0 && arr[j]>key){
+	            arr[j+1] = arr[j];
+	            j=j-1;
+	        }
+	        arr[j+1]=key;
+	    }
+	    
+	}
+}
+////////////////////////////////////////////////////////////////
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+class GFG
+ {
+	public static void main (String[] args) throws IOException
+	 {
+	 //code
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in)); 
+		 int t = Integer.parseInt(br.readLine());
+		 
+		 while(t-- >0){
+			 int sizeOfinput = Integer.parseInt(br.readLine());
+			 int [] arr = new int [sizeOfinput];
+			 String line = br.readLine(); 
+			 String[] strs = line.trim().split("\\s+"); 
+			 
+			 for(int i=0; i<sizeOfinput; i++) {
+			 arr[i] = Integer.parseInt(strs[i]);
+		  }
+		  int thatPoint = equilibriumPoint(arr,sizeOfinput);
+		  System.out.println(thatPoint);
+		  //printArray(arr);
+		 }
+		  br.close(); 
+	 }
+	 
+	 static int equilibriumPoint(int[] arr,int n){
+	     if(n==1){
+	         return 1;
+	     }
+	     int mid = arr.length/2;
+	     int belowMid = sumArray(arr,0,mid-1);
+	     int aboveMid = sumArray(arr,mid+1,n-1);
+	     if(belowMid == aboveMid){
+	         return mid;
+	     }else if(belowMid>aboveMid){
+	         int s = mid;
+	         while(s>0){
+	           belowMid -= arr[s-1];
+	           aboveMid += arr[s];
+	           if(belowMid == aboveMid){
+	               return s;
+	           }
+	           s=s-1;
+	         }
+	     }else{
+	         int s = mid;
+	         while(s<(n-1)){
+	           belowMid += arr[s];
+	           aboveMid -= arr[s+1];
+	           if(belowMid == aboveMid){
+	               return s+2;
+	           }
+	           s=s+1;
+	         }
+	     }
+	     return -1;
+	 }
+	 static int sumArray(int[] arr,int i,int j){
+	     int sum = 0;
+	     while(i<=j){
+	         sum+=arr[i];
+	         i++;
+	     }
+	     return sum;
+	 }
+}
+**************************************************************************
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+class GFG
+ {
+	public static void main (String[] args) throws IOException
+	 {
+	 //code
+	 BufferedReader br = new BufferedReader(new InputStreamReader(System.in)); 
+		 int t = Integer.parseInt(br.readLine());
+		 
+		 while(t-- >0){
+			Long num = Long.parseLong(br.readLine());
+			 findAllFactors(num);
+		 }
+		  br.close(); 
+	 }
+	 static void findAllFactors(long num){
+	     long sum = 0l;
+	     long[] lookup = new long[];
+	     for(long i=0l;i<lookup.length;i++){
+	         lookup[i] = 0;
+	     }
+	     for(long i=1l;i<num/2;i++){
+	         if(lookup[i]!=0){
+	             continue;
+	         }
+	         if(num%i ==0){
+	             lookup[i] = i;
+	             lookup[num/i] = num/i;
+	         }
+	     }
+	     
+	     for(long j=0l;j<lookup.length;j++){
+	         sum +=lookup[j];
+	     }
+	     if(sum == num){
+	         System.out.println(1);
+	     }else{
+	         System.out.println(0);
+	     }
+	 }
+}
+*******************************************************************
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+class GFG
+ {
+	public static void main (String[] args)throws IOException
+	 {
+	 //code
+	 BufferedReader br = new BufferedReader(new InputStreamReader(System.in)); 
+		 int t = Integer.parseInt(br.readLine());
+		 
+		 while(t-- >0){
+			 long num = Long.parseLong(br.readLine());
+			 //int[] prime = findPrimeLessThanNum(num);
+			 findLargestPrimeFactor(num);
+		 }
+		  br.close();
+	 }
+	 static void findLargestPrimeFactor(int[] prime,int num){
+	     int i=0;
+	     int largestPrime = 2;
+	         while(i<prime.length && prime[i]!=0){
+	             if(num%prime[i]==0){
+	                 largestPrime = prime[i];
+	                 num = num/prime[i];
+	             }else{
+	                 i++;
+	             }
+	         }
+	         System.out.println(largestPrime);
+	 }
+	 static int[] findPrimeLessThanNum(int num){
+	     Boolean[] prime = new Boolean[num+1];
+	     for(int j=0;j<=num;j++){
+	         prime[j] = true;
+	     }
+	     for(int i=2;i*i<=num;i++){
+	        if(prime[i] ==true){
+	            for(int j=i*i;j<=num;j=j+i){
+	                prime[j] = false;
+	            }
+	        } 
+	     }
+	     int r=0;
+	     int[] primeA = new int[num];
+	     for(int i=2;i<=num;i++){
+	         if(prime[i] == true){
+	             primeA[r] = i;
+	             r++;
+	         }
+	     }
+	     return primeA;
+	 } 
+}
+********************************************************
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+class GFG
+ {
+	public static void main (String[] args)throws IOException
+	 {
+	 //code
+	 BufferedReader br = new BufferedReader(new InputStreamReader(System.in)); 
+		 int t = Integer.parseInt(br.readLine());
+		 
+		 while(t-- >0){
+			 long num = Long.parseLong(br.readLine());
+			 findLargestPrimeFactor(num);
+		 }
+		  br.close();
+	 }
+	 static void findLargestPrimeFactor(long num){
+	     if(checkIfPrime(num)){
+			 System.out.println(num);
+			 return;
+		 }
+	 long i=2l, largestPrime = 2l;
+	 long originalNum = num;
+	 //long arr[] = new long[100];
+	 while(i<=(num/2)){
+	         if(num%i ==0){
+	             num = num/i;
+	             largestPrime = i;
+	        	 //arr[j] = i;
+	        	 //j++;
+	         }
+	         else{
+	             i++;
+	         }
+	         if(i*i>originalNum){
+	           largestPrime = i;
+	           break;
+	         }
+	     }
+	     //Arrays.sort(arr);
+	     System.out.println(largestPrime);
+	 }
+	  static boolean checkIfPrime(long num){
+		 boolean prime = true;
+		 for(long i=2l;i*i<=num;i++){
+			 if(num%i == 0l){
+				 prime =false;
+				 break;
+			 }
+		 }
+		 return prime;
+	 }
+	 
+}
+*************************************************************************
+Scanning in java - 
+Scanner sc= new Scanner(System.in);
+int t = sc.nextInt();
+while(t-- >0){
+int n = sc.nextInt();
+int a1 = sc.nextInt();
+}
+****************************************
+class Loop{
+    int detectLoop(Node head) {
+        // Add code here
+        if(head == null){
+            return 0;
+        }
+        Node prev=null,curr=head;
+        while(curr.next !=null){
+            if(prev == curr){
+                return 1;
+            }
+            prev = curr;
+            curr = curr.next;
+        }
+    }
+}
+***********************************************************8
+   {
+         //add code here.
+         if(head == null || head.next == null){
+             return;
+         }
+         Node temp = head,prev=null,store =head;
+         int counter =1;
+         while(temp!=null){
+             prev = temp;
+             temp = temp.next;
+             if(counter == k && prev.next!=null){
+                 head = prev.next;
+                 prev.next = null;
+             }
+          counter++;
+         }
+         prev.next = store;
+         printList(head);
+*********************************
+    {
+         //add code here.
+         if(head == null || head.next == null){
+             return;
+         }
+         Node temp = head;
+         int counter =1;
+         while(temp.next!=null && counter<k){
+             temp = temp.next;
+             counter++;
+         }
+         if(temp.next ==null){
+             return;
+         }
+         Node end = temp,begin=temp.next;
+         while(begin.next!=null){
+             begin = begin.next;
+         }
+         begin.next = head;
+         head = end.next;
+         end.next = null;
+         printList(head);
+         }
+*************************************************************
+ Node temp = node,start = head,a = null;
+        int counter =1,n=1;
+        while(temp.next != null){
+            if(counter ==(n*k)){
+                n++;
+                a = temp.next;
+                temp.next = null;
+                reverseList(start);
+                start = a;
+            }
+        }
+    }
+    public static void reverseList(Node start){
+        Node curr = start,prev=null,next=null;
+        while(curr!=null){
+            next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+        return 
+    }
+******************************************
+###For removing all greater values on the right side
+  void compute(LinkedList l)
+    {
+     l.head = nextmax(l.head);
+    }
+    static Node nextmax(Node h){
+        int max = 0;
+        Node maxN = null;
+        while(h!= null){
+            if(h.data > max){
+                max = h.data;
+                maxN = h;
+            }
+            h = h.next;
+        }
+        h = maxN;
+    if(h!=null && h.next != null){
+      h.next = nextmax(h.next);  
+        }
+    return h;
+    }
+	******************************************************************
+	Node sortedMerge(Node headA, Node headB) {
+     // This is a "method-only" submission. 
+     // You only need to complete this method
+     Node head = headB;
+     Node tempA = headA;
+     Node tempB = headB;
+     Node prev = null,next=null;
+    
+     while(headA!=null){
+         tempA = headA;
+         while(tempB!=null){
+             if(tempA.data<tempB.data){
+                 headA = headA.next;
+                 if(prev == null){
+                     head = tempA;
+                     head.next = tempB;
+                 }else{
+                 prev.next = tempA;
+                 tempA.next = tempB;
+                 System.out.println("tempA inside "+tempA.data);
+                 //System.out.println("tempA next "+next.next.data);
+                 } 
+             }
+             System.out.println("tempB inside "+tempB.data);
+             prev = tempB;
+             tempB = tempB.next;
+         }
+         System.out.println(" prev "+prev.data);
+         prev = tempA;
+         tempB = tempA;
+         break;
+         //tempA = headA;
+     }
+     return head;
+   } 
+   ******************************************************************
+    // This function will add the numbers represented by two linked lists
+    Node addTwoLists(Node first, Node second) {
+        // Your code here
+        Node new_head = new Node(0);
+        if(first == null || second == null){
+            return null;
+        }
+       
+        double sum1 =0d,sum2 = 0d,i=0d,j=0d;
+        while(true){
+            if(first!=null){
+                sum1 += (first.data*Math.pow(10d,i));
+                i++;
+                first = first.next;
+            }
+            if(second!=null){
+                sum2 += (second.data*Math.pow(10d,j));
+                second = second.next;
+            }
+         if(first==null && second ==null)break;    
+        }
+        sum1 = sum1 + sum2;
+        System.out.println("from the grave "+sum1);
+        while(sum1>0d){
+            new_head.next = new Node((int)(sum1%10d));
+            sum1 = (sum1/10d);
+        }
+        return new_head.next;
+    }
+              4 7 5 8 7 1 2 6 9 5 7 1 3 6 8 
+8 4 0 6 8 3 3 3 4 6 9 8 1 3 8 8 3 5 7 9 5 9 
+1 8 4 5 7 7 4 2 2 9 6 4 9 5 0 4 5 2 9 0 3 0 3 4 6 7 7 9 9 
+6 8 5 2 6 4 6 0 5 8 0 1 1 5 0 1 2 0 8 6 3 9 9
+****************************************************************************
+ Stack<Node> mys1 = new Stack<Node>();
+        Stack<Node> mys2 = new Stack<Node>();
+        Node tempA = headA,tempB = headB;
+        while(true){
+            if(tempA.next!=null){
+            mys1.push(tempA);
+            tempA = tempA.next;
+            }
+            if(tempB.next!=null){
+            mys2.push(tempB);
+            tempB = tempB.next;
+            }
+            if(tempA.next == null && tempB.next == null){
+                break;
+            }
+        }
+        int com = -1;
+        if(tempA.data == tempB.data){
+            while(!mys1.empty() && !mys2.empty()){
+                if(mys1.peek() != mys2.peek()){
+                    
+                }
+            }
+        }
+         return -1;
+*****************************************************************************8
+{
+        if(node.next == null){
+            return;
+        }
+       // add your code here
+       Node curr = node,next = node.next,prev = null;
+       while(curr!=null && node!=null){
+          curr.next = next.next;
+          next.next = curr;
+          if(prev!=null){
+              prev.next = next;
+          }
+          prev = curr;
+          curr = curr.next;
+          if(curr==null){
+              break;
+          }
+          next = curr.next;
+    }
+    }
+**************************************************************************
+	public static void insert(Node zhead,int value,int n)
+         {
+            //add code here.
+            //System.out.println("zhead "+zhead.data+" value "+value+" n "+n);
+            Node temp = zhead,prev = null;
+            Node toInsert = new Node(value);
+            while(n-- > 0){
+                if(value<temp.data){
+                    if(prev == null){
+                       prev = toInsert;
+                       prev.next = zhead;
+                       zhead = prev;
+                    }else{
+                        prev.next = toInsert;
+                        toInsert.next = temp;
+                    }
+                    break;
+                }else if(value > temp.data && n==1){
+                   toInsert.next = temp.next;
+                   temp.next = toInsert;
+                }
+                prev = temp;
+                temp = temp.next;
+            }
+            temp = zhead;
+            do{
+                System.out.print(temp.data+" ");
+                temp = temp.next;
+            }while(temp!=zhead);
+         }	
+***************************************************************************
+ static Node segregate(Node head)
+    {
+        // add your code here
+        Node last = head,curr=head,prev=null,temp = head;
+        while(last.next!=null){
+            last = last.next;
+        }
+        while(temp!=null){
+            curr = temp;
+            System.out.println(" temp "+temp.data);
+            if(curr.data == 2){
+                 temp = temp.next;
+                if(prev!=null){
+                     System.out.println("prev data "+prev.data);
+                 prev.next = curr.next;
+                }
+                last.next = curr;
+                curr.next = null;
+                last = curr;
+                }else if(curr.data ==0 && prev!=null){
+                     temp = temp.next;
+                    prev.next = curr.next;
+                    curr.next = head;
+                    head = curr;
+                }else{
+                    prev = temp;
+                    temp = temp.next;
+                }
+            //System.out.println(" temp "+temp.data);
+        }
+        return head;
+     }
+*************************************
+static Node segregate(Node head)
+    {
+        // add your code here
+        Node last = head,curr=head,prev=null,temp = head;
+        int counter = 1;
+        while(last.next!=null){
+            counter++;
+            last = last.next;
+        }
+        while(counter-->0){
+            curr = temp;
+            if(curr.data == 2 && curr.next!=null){
+                if(prev!=null){
+                 prev.next = curr.next;
+                }else{
+                	head = curr.next;
+                }
+                last.next = curr; 
+                temp = curr.next;
+                curr.next = null;
+                last = curr;
+                }else if(curr.data ==0 && prev!=null){
+                    prev.next = curr.next;
+                    temp = curr.next;
+                    curr.next = head;
+                    head = curr;
+                }else{
+                    //System.out.println("else mei");
+                    prev = temp;
+                    temp = temp.next;
+                }
+        }
+        return head;
+     }	 
+**************************************************************8
+ public static Node quickSort(Node node)
+    {
+        node = quickSortRec(node, getTail(node));
+        
+        return node;
+    }
+    
+    public static Node getTail(Node n)
+    {
+        while(n != null && n.next != null)
+               n = n.next;
+               
+        return n;
+    }
+    
+    static class Res
+    {
+        Node newHead = null, newEnd = null;
+    }
+    public static Node quickSortRec(Node head, Node last)
+    {
+        if(head == null || head == last)
+          return head;
+          
+        Res r = new Res();
+        Res s = new Res();
+        Node pivot = partition(head, last, r, s);
+        
+        if(r.newHead != pivot)
+        {
+            Node tmp = r.newHead;
+            while (tmp.next != pivot)
+                    tmp = tmp.next;
+                    tmp.next = null;
+                    
+            r.newHead = quickSortRec(r.newHead, tmp);
+            tmp = getTail(r.newHead);
+            tmp.next =  pivot;
+        
+        }
+        pivot.next = quickSortRec(pivot.next, s.newEnd);
+        return r.newHead;
+    }
+    
+    public static Node partition(Node head, Node last, Res r, Res s)
+    {
+        Node pivot = last;
+         Node prev = null, cur = head, tail = pivot;
+         
+        while(cur != pivot)
+        {
+            if (cur.data < pivot.data)
+        {
+           
+            if (r.newHead == null)
+                r.newHead = cur;
+ 
+            prev = cur;  
+            cur = cur.next;
+        }
+        else 
+        {
+            
+            if (prev != null)
+                prev.next = cur.next;
+            Node tmp = cur.next;
+            cur.next = null;
+            tail.next = cur;
+            tail = cur;
+            cur = tmp;
+        }
+        }
+        
+        if (r.newHead == null)
+           r.newHead = pivot;
+           
+        s.newEnd = tail;
+        
+        return pivot;
+    }
+}	 
+*****************************************************************************
+ Node copyList(Node head) {
+        // your code here
+        if(head == null){
+        return head;
+        }
+        Node temp = head,curr = head,x=null,newNode=null;
+        
+        HashMap<Node,Node> hs = new HashMap<Node,Node>();
+        while(temp!=null){
+            hs.put(temp,temp.arb);
+            temp = temp.next;
+        }
+        temp =head;
+        Node new_head = new Node(head.data);
+        new_head.arb  = hs.get(head);
+        x = new_head;
+        temp =temp.next;
+        while(temp!=null){
+            newNode = new Node(temp.data);
+            newNode.arb = hs.get(temp);
+            x.next = newNode;
+            x = x.next;
+            temp = temp.next;
+        }
+        return new_head;
+    }
+}
+*************************************
+How copying is supposed to happen 
+
+ // your code here
+        if(head == null){
+        return head;
+        }
+        Node temp = head,next = null;
+        Node new_head = new Node(head.data);
+        Node x = new_head;
+        temp = temp.next;
+        while(temp!=null){
+            Node trp = new Node(temp.data);
+            x.next  = trp;
+            x = x.next;
+            temp = temp.next;
+        }
+        temp = head;
+        x = new_head;
+        while(temp!=null){
+            if(temp.arb!=null){
+                System.out.println("temp arb "+temp.arb.data);
+            }
+            x.arb = temp.arb;
+            next = temp.next;
+            temp.next = x;
+            temp = next;
+            x = x.next;
+        }
+        x = new_head;
+        while(x!=null){
+            if(x.arb!=null){
+            System.out.println("arb "+x.arb.data);
+            x.arb = x.arb.arb.next;
+            }
+            x = x.next;
+            break;
+        }
+       return new_head; 
+    }
+*********************************************************
+ next = temp.next.next;
+            if(prev!=null){
+                prev.next = next;
+            }
+            prev = temp;
+            hare = hare.next;
+            if(hare!=null){
+                mys.push(hare);
+                hare = hare.next;
+            }
+            temp = next;
+***********************************************
+ public static void addPolynomial(Node p1,Node p2)
+    {
+        //Add your code here.
+        Node temp1 = p1;
+        Node temp2 = p2;
+        while(temp1!=null){
+            temp2 = p2;
+          while(temp2!=null){
+              if(temp1.pow == temp2.pow){
+                  temp1.coeff = temp1.coeff+temp2.coeff;
+              }
+              temp2 = temp2.next;
+          }
+          temp1 = temp1.next;
+    }
+    temp1 = p1;
+    while(temp1!=null){
+        System.out.print(temp1.coeff+"x"+temp1.pow+"+");
+        temp1 = temp1.next;
+    }
+    }
+************************
+Node temp1 = p1;
+    while(temp1.next!=null){
+        temp1 = temp1.next;
+    }
+    Node last = temp1;
+    while(p2!=null){
+        temp1.next = p2;
+        p2 = p2.next;
+        temp1 = temp1.next;
+    }
+    temp1 = p1;
+    //Node prev=null,next = null;
+    while(temp1 != null){
+        Node tmp = temp1.next;
+        while(tmp!=null){        older system when off, and a submission of application to the new system when On 
+            next = tmp.next;
+            if(temp1.pow == tmp.pow){
+                temp1.coeff +=tmp.coeff;
+            }
+            tmp = tmp.next;
+        }
+        temp1 = temp1.next;
+    }
+    
+    while(p1!=null){
+        if(p1.next == null){
+            System.out.print(p1.coeff+"x"+p1.pow); 
+        }else{
+           System.out.print(p1.coeff+"x"+p1.pow+"+");  
+        }
+       
+        p1 = p1.next;
+    }
+********************************************************
+   Node temp = head;
+          String abc = "";
+          while(temp!=null){
+              abc+=temp.data+" ";
+              temp = temp.next;
+          }
+          abc = abc.trim();
+          String[] sarr = abc.split(" ");
+          int len = (sarr.length()-1)*(sarr.length())/2;
+          String[] allComb = new String[len];
+          for(int i=0;i<len;i++){
+              for(int j=0;j<sarr.length();j++){
+                  
+              }
+          }	
+******************************************************************
+int p;
+        long q;
+        int x = 1000000007;
+      long result =Long.valueOf(N);
+       while(R>0){
+           result =(((result)%1000000007)*((result)%1000000007))%1000000007;
+           R--;
+       }
+      return (int)result;
+*********************************************************************
+    static int trappingWater(int arr[], int n) { 
+        
+        // Your code here
+        int left=0,right=1,i=1,vol=0;
+       while(i<n){
+               left = findFirstPositiveNumLeft(arr,i-1,0);
+               right  = findFirstPositiveNumRight(arr,i+1,n);
+               vol+=findSum(arr,left,right);
+               i=right+1;
+        }
+       return vol; 
+    }
+    static int findSum(int[] arr,int l,int r){
+        int min = arr[l]<arr[r]?arr[l]:arr[r];
+        if(min==0)return 0;
+        int sum=0;
+        for(int i=l+1;i<r;i++){
+           sum+=min - arr[i];
+        }
+        if(sum>0){
+        return sum;
+        }else{
+            return 0;
+        }
+    }
+    static int findFirstPositiveNumLeft(int[] arr,int start,int end){
+        for(int i=start;i>end;i--){
+            if(arr[i]>0){
+                return i;
+            }
+        }
+        return start;
+    }
+    static int findFirstPositiveNumRight(int[] arr,int start,int end){
+        for(int i=start;i<end;i++){
+            if(arr[i]>0){
+                return i;
+            }
+        }
+        return start;
+    }
+*************************************
+ static int trappingWater(int arr[], int n) { 
+        
+        // Your code here
+        int left=0,right=1,i=0,vol=0;
+       while(i<n-2 && (i+1)!=(n-1)){
+           if(arr[i+1]>=arr[i]){
+               i++;
+           }else{
+               right  = findFirstPositiveNumRight(arr,i+1,n);
+               if(arr[i]>arr[right]){
+                   i = right;
+               }else{
+               vol+=findSum(arr,i+1,right);
+               i=right+1;
+               }
+           }
+        }
+       return vol; 
+    }
+    static int findSum(int[] arr,int l,int r){
+        int sum=0,min=arr[r];
+        for(int i=l;i<r;i++){
+           sum+=min - arr[i];
+        }
+        if(sum>0){
+        return sum;
+        }else{
+            return 0;
+        }
+    }
+    static int findFirstPositiveNumRight(int[] arr,int start,int end){
+        int max =0,j=0;
+        for(int i=start;i<end;i++){
+            if(arr[i]>0 && arr[i]>max){
+                max = arr[i];
+                j=i;
+            }
+        }
+        return j;
+    }	
+**********************************
+static int trappingWater(int arr[], int n) { 
+	        
+	        // Your code here
+	       int min = findMin(arr,1,n-2);
+	       int left=0,right=1,i=1,vol=0;
+           left = findFirstPositiveNumLeft(arr,min-1,0);
+           right= findFirstPositiveNumRight(arr,min+1,n);
+           
+           vol+=findSum(arr,left,right);
+           return vol; 
+	    }
+	    static int findMin(int[] arr,int l,int r){
+	        if(l==r){
+	            return l;
+	        }
+	        int min = Integer.MAX_VALUE,j=0;
+	        for(int i=l;i<r;i++){
+	            if(arr[i]<min){
+	                min = arr[i];
+	                j=i;
+	            }
+	        }
+	        return j;
+	    }
+	    static int findSum(int[] arr,int l,int r){
+	        int min = arr[l]<arr[r]?arr[l]:arr[r];
+	        if(min==0)return 0;
+	        int sum=0;
+	        for(int i=l+1;i<r;i++){
+	           sum+=min - arr[i];
+	        }
+	        if(sum>0){
+	        return sum;
+	        }else{
+	            return 0;
+	        }
+	    }
+	    static int findFirstPositiveNumLeft(int[] arr,int start,int end){
+	        int max =0,j=0;
+	        for(int i=start;i>end;i--){
+	            if(arr[i]>0 && arr[i]>max){
+	                max = arr[i];
+	                j= i;
+	            }
+	        }
+	        return j;
+	    }
+	    static int findFirstPositiveNumRight(int[] arr,int start,int end){
+	        int max =0,j=0;
+	        for(int i=start;i<end;i++){
+	            if(arr[i]>0 && arr[i]>max){
+	                max = arr[i];
+	                j=i;
+	            }
+	        }
+	        return j;
+	    }
+************************************************
+  Scanner sc = new Scanner(System.in);
+	 int t = sc.nextInt();
+	 while(t-->0){
+	     Stack<String> sk = new Stack<String>();
+	     sc.nextLine();
+	     String ab = sc.nextLine();
+	     char[] ch = ab.toCharArray();
+	     for(int i=0;i<ch.length;i++){
+	         int r = (int)ch[i];
+	         if((r>=97 && r<=122) ||(r>=65 && r<=90)){
+	             System.out.print(ch[i]);
+	         }else{
+	            if('(' == ch[i]){
+	                sk.push(String.valueOf(ch[i]));
+	            }else if(ch[i] == ')'){
+	                while(sk.peek() != "("){
+	                    System.out.print(sk.pop());
+	                }
+	                sk.pop();
+	            }else if(sk.isEmpty() || sk.peek() == "(" || (precedence(ch[i])>precedence(sk.peek().charAt(0)))){
+	                sk.push(String.valueOf(ch[i]));
+	            }else{
+	                while(!sk.isEmpty()){
+	                if(sk.peek() == "(") break;
+	                if(precedence(ch[i])<=precedence(sk.peek().charAt(0))){
+	                    System.out.print(sk.pop());
+	                }
+	                }
+	            } 
+	         }
+	     }
+	 }
+	 }
+	 static int precedence(char ch){
+	     int p = 0;
+	     //int fp = (int) ch;
+	     switch(ch){
+	         case '^': p=3;
+	         break;
+	         case '*':
+	         case '/':
+	             p=2;
+	             break;
+	          case '+':
+	          case '-':
+	              p=1;
+	              break;
+	     }
+	     return p;
+	 }
+***********************	 
+**********************************************************************
+*************************************************
+My C++ code
+	int t;
+	cin>>t;
+	while(t--){
+	    long long n,sq1,sq2,s;
+	    cin>>n;
+	    float p;
+	    p = sqrt(n);
+	    s = floor(p);
+	    if((p-s) == 0){
+	        sq1 = (s-1)*(s-1);
+	        sq2 = (s+1)*(s+1);
+	    }else{
+	    sq1 = s*s;
+	    sq2 = (s+1)*(s+1);
+	    }
+	    
+	    if((n-sq1) < (sq2 - n)){
+	        cout<<sq1;
+	    }else{
+	        cout<<sq2;
+	    }
+	    cout<<endl;
+	}
+	return 0;
+********************************************************
+ outer:
+        for(int i=0;i<n-1;i++){
+            int total = m[i];
+            inner:
+            for(int j=i+1;j<n;j++){
+                total+=m[j];
+                if(total==s){
+                    System.out.print((i+1)+" "+(j+1));
+                    return;
+                }else if(total>s){
+                    continue outer;
+                }
+            }
+        }
+       System.out.print("-1"); 
+*********************************************************************8
+public static void main (String[] args) throws IOException
+	 {
+	 //code
+	  BufferedReader br = new BufferedReader(new InputStreamReader(System.in)); 
+		 int t = Integer.parseInt(br.readLine());
+	 while(t-->0){
+	     String a1 = br.readLine();
+	     String[] a1A = a1.split("\\s+");
+	     int n = Integer.parseInt(a1A[0]);
+	     int m = Integer.parseInt(a1A[1]);
+	     int[] arr1 = new int[n];
+	     int[] arr2 = new int[m];
+	     a1 = br.readLine();
+	     a1A = a1.split("\\s+");
+	     for(int i=0;i<n;i++){
+	        arr1[i] = Integer.parseInt(a1A[i]); 
+	     }
+	     a1 = br.readLine();
+	     a1A = a1.split("\\s+");
+	     for(int i=0;i<m;i++){
+	         arr2[i] = Integer.parseInt(a1A[i]);
+	     }
+	     System.out.print(findMedian(arr1,arr2,n,m));
+	     System.out.println();
+	 }
+	 }
+	 public static int findMedian(int[] arr1,int[] arr2, int n, int m){
+	
+     for(int i=m-1;i>=0;i--){
+         int j, last = arr1[n-1];
+         for(j=n-2;j>=0 && arr1[j]>=arr2[i];j--){
+             arr1[j+1] = arr1[j];
+         }
+         if(j!=n-2 && last>arr2[i]){
+             arr1[j+1] = arr2[i];
+             arr2[i] = last;
+         }
+     }
+	    int m1 = (n+m)/2,median;
+	    if((n+m) %2==0){
+	    if(m1>n){
+	        median = (arr2[m1-n-1]+arr2[m1-n])/2;
+	    }else if((m1+1)>n){
+	        median = (arr1[m1-1]+arr2[m1-n])/2;
+	    }else{
+	        median = (arr1[m1-1]+arr1[m1])/2;
+	    }
+	    }else{
+	        if(m1>n-1){
+	            median  = arr2[m1-n];
+	        }else{
+	            median = arr1[m1];
+	        }
+	    }
+	    return median;
+	 }
+*******************************
+BufferedReader br = new BufferedReader(new InputStreamReader(System.in)); 
+		 int t = Integer.parseInt(br.readLine());
+	 while(t-->0){
+	     String a1 = br.readLine();
+	     String[] a1A = a1.split("\\s+");
+	     int n = Integer.parseInt(a1A[0]);
+	     int m = Integer.parseInt(a1A[1]);
+	     int[] arr = new int[n+m];
+	     //int[] arr2 = new int[m];
+	     a1 = br.readLine();
+	     a1A = a1.split("\\s+");
+	     for(int i=0;i<n;i++){
+	        arr[i] = Integer.parseInt(a1A[i]); 
+	     }
+	     a1 = br.readLine();
+	     a1A = a1.split("\\s+");
+	     int j=0;
+	     for(int i=n;i<(n+m);i++){
+	         arr[i] = Integer.parseInt(a1A[j]);
+	         j++;
+	     }
+	     System.out.print(findMedian(arr,n,m));
+	     System.out.println();
+	 }
+	 }
+	 public static int findMedian(int[] arr, int n, int m){
+	
+     for(int i=(n+m)-1;i>=n;i--){
+         int j, last = arr[n-1];
+         for(j=n-2;j>=0 && arr[j]>=arr[i];j--){
+             arr[j+1] = arr[j];
+         }
+         if(j!=n-2 && last>arr[i]){
+             arr[j+1] = arr[i];
+             arr[i] = last;
+         }
+     }
+	    int s = (n+m),median;
+	    if(s%2==0){
+	     median = (arr[(s-1)/2]+arr[s/2])/2;
+	    }else{
+	        median = arr[s/2];
+	    }
+	    return median;
+	 }	 
+*****************************************************************8
+static long inversionCount(long arr[], long n)
+    {
+        // add your code here
+        long count  =0;
+        for(int i=0;i<n-1;i++){
+            for(int j =i+1;j<n;j++){
+                if(arr[i]>arr[j]){
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+***********************************************************8
+ static long findNumberOfTriangles(int arr[], int n)
+     {
+         // add your code here
+         if(arr.length<3){
+             return 0;
+         }
+         Arrays.sort(arr);
+         /*for(int r=0;r<arr.length;r++){
+        	 System.out.print(arr[r]+" ");
+         }*/
+         int i,j,k,sum;
+         long count =0;
+         for(i=0;i<n-2;i++){
+             j=i+1;
+         while(j<n-1){
+             sum = arr[i]+arr[j];
+             k=n-1;
+             while(sum<arr[k]){
+                 k--;
+             }
+             count += k-j;
+             j++;
+             }
+           }
+           return count;
+     }
+*****************************************************************8
+For Input:
+2
+18 107
+170 498 570 539 129 140 19 471 586 393 281 543 755 534 708 744 401 551 
+22 185
+789 721 191 141 635 648 326 984 462 695 143 631 192 64 521 321 555 539 493 931 423 35
+Output of Online Judge is:
+129 140 170 19 281 393 401 471 498 534 539 543 551 570 586 708 744 755 
+191 192 143 141 64 321 326 35 423 462 493 521 539 555 631 635 648 695 721 789 931 984 
+
+******************************************************************
+public static void merge(int arr1[], int arr2[], int n, int m) 
+    {
+       // add your code here 
+       int i=m-1,j;
+       while(i>=0){
+           int last = arr1[n-1];
+        for(j=n-2;j>=0 && arr1[j]>arr2[i];j--){
+           arr1[j+1] = arr1[j]; 
+       }
+       if(j!=n-2 || last>arr2[i]){
+           arr1[j+1] = arr2[i];
+           arr2[i] = last;
+       }
+       i--;
+    }
+    }
+*********************************
+Cpp solution for merge two arrays sorted
+void merge(int arr1[], int arr2[], int n, int m) 
+{ 
+    //Your code here
+    //n is size of arr1
+    //m is size of arr2
+    /*for (int i=m-1; i>=0; i--){
+        int j, last = arr1[n-1]; 
+        for (j=n-2; j >= 0 && arr2[i] <= arr1[j]; j--) 
+            arr1[j+1] = arr1[j]; 
+            if (j != n-2 || last > arr2[i]) 
+        { 
+            arr1[j+1] = arr2[i]; 
+            arr2[i] = last; 
+        } 
+    }*/
+        vector <int> v;
+        
+        int l=0;
+        int r=0;
+        while(l<n && r<m){
+            if(arr1[l] <= arr2[r]){
+                v.push_back(arr1[l]);
+                l++;
+                }
+        else if(arr1[l]> arr2[r]){
+        v.push_back(arr2[r]);
+        r++;
+        }else{
+        v.push_back(arr1[l]);
+        l++;
+        v.push_back(arr2[r]);
+        r++;
+        }
+        }
+        
+        while(l<n){
+            v.push_back(arr1[l]);
+            l++; 
+        }
+        while(r<m){
+            v.push_back(arr2[r]);
+            r++;
+            }
+        int index=0;
+        auto it = v.begin();
+        while(index<n){
+          arr1[index]=*it; 
+          it++;
+          index++;
+          }
+          index=0;
+        while(index<m){
+         arr2[index]=*it;
+         it++; 
+         index++;
+          } 
+    }	
+**************************************************************8
+Scanner sc = new Scanner(System.in);
+	 int t = sc.nextInt();
+	 while(t-->0){
+	     int n = sc.nextInt();
+	     int m = sc.nextInt();
+	     int[] ar1 = new int[n];
+	     int[] ar2 = new int[m];
+	     HashSet<Integer> hs= new HashSet<Integer>();
+	     for(int i=0;i<n;i++){
+	         hs.add(sc.nextInt());
+	     }
+	     for(int i=0;i<m;i++){
+	         hs.add(sc.nextInt());
+	     }
+	    for(Integer a: hs){
+	        System.out.print(a+" ");
+	    }
+	    System.out.println();
+	    
+	 }
+*********************************************************8
+Scanner sc = new Scanner(System.in);
+	 int t = sc.nextInt();
+	 while(t-->0){
+	     int n = sc.nextInt();
+	     int m = sc.nextInt();
+	     int[] ar1 = new int[n];
+	     int[] ar2 = new int[m];
+	     HashSet<Integer> hs= new HashSet<Integer>();
+	     for(int i=0;i<n;i++){
+	         hs.add(sc.nextInt());
+	     }
+	     int  count=0;
+	     for(int i=0;i<m;i++){
+	         if(hs.contains(sc.nextInt())){
+	             count++;
+	         }
+	     }
+	    System.out.println(count);	
+*************************************************************************8
+static void printPair(int[] arr, int n){
+	     HashMap<Integer,Integer> mp = new HashMap<Integer,Integer>();
+	     for(int i=0;i<n;i++){
+	         int abs = Math.abs(arr[i]);
+	         if(mp.containsKey(abs)){
+	             mp.put(abs,arr[i]);
+	         }else{
+	             mp.put(abs,0);
+	         }
+	     }
+	     ArrayList<Integer> al = new ArrayList<Integer>();
+	     for(Integer a: mp.keySet()){
+	         if(mp.get(a)==2){
+	             al.add(a);
+	         }
+	     }
+	     Collections.sort(al);
+	     Iterator<Integer> it = al.iterator();
+	     StringBuffer ab = new StringBuffer();
+	     while(it.hasNext()){
+	         int a = it.next();
+	         ab.append(a+" "+"-"+a+" ");
+	     }
+	     if(ab.length()>0){
+	         
+	         System.out.println(ab);
+	     }else{
+	     System.out.println("0");
+	     }
+	 }	
+********************************************************************************8
+	public static void main (String[] args)throws IOException
+	 {
+	 //code
+	  BufferedReader br = new BufferedReader(new InputStreamReader(System.in)); 
+		 int t = Integer.parseInt(br.readLine());
+		 while(t-->0){
+		     String a = br.readLine();
+		     String[] aA = a.split("\\s+");
+		     int m = Integer.parseInt(aA[0]);
+		     int n = Integer.parseInt(aA[1]);
+		     //int[][] arrm = new int[m][n];
+		     HashSet<Integer> hs = new HashSet<Integer>();
+		     for(int i=0;i<m;i++){
+		         a = br.readLine();
+		         aA = a.split("\\s+");
+		         for(int j=0;j<n;j++){
+		             int temp = Integer.parseInt(aA[j]);
+		             if(temp == 1){
+		                 hs.add(i);
+		                 break;
+		             }
+		         }
+		     }
+		     for(int i =0;i<m;i++){
+		         int temp = 0;
+		         if(hs.contains(i)){
+		             temp = 1;
+		         }
+		         for(int j=0;j<n;j++){
+		                 System.out.print(temp+" ");
+		          }
+		          System.out.println();
+		     }
+		    
+		 }
+	 }	
+*********************************************
+public static void main (String[] args)throws IOException
+	 {
+	 //code
+	  BufferedReader br = new BufferedReader(new InputStreamReader(System.in)); 
+		 int t = Integer.parseInt(br.readLine());
+		 while(t-->0){
+		     String a = br.readLine();
+		     String[] aA = a.split("\\s+");
+		     int m = Integer.parseInt(aA[0]);
+		     int n = Integer.parseInt(aA[1]);	
+		     int[] arr = new int[m];
+		     for(int i=0;i<m;i++){
+		         a = br.readLine();
+		         aA = a.split("\\s+");
+		         for(int j=0;j<n;j++){
+		             if(Integer.parseInt(aA[j]) == 1){
+		                 arr[i] = 1;
+		                 break;
+		             }
+		         }
+		     }
+		     for(int i =0;i<m;i++){
+		         int temp = 0;
+		         if(arr[i] == 1){
+		             temp = 1;
+		         }
+		         for(int j=0;j<n;j++){
+		                 System.out.print(temp+" ");
+		          }
+		          System.out.println();
+		     }
+		    
+		 }
+	 }	 
+	 
+*************************************************************************8
+	public static void main (String[] args)throws IOException
+	 {
+	 //code
+	 BufferedReader br = new BufferedReader(new InputStreamReader(System.in)); 
+		 int t = Integer.parseInt(br.readLine());
+		 while(t-->0){
+		  int n = Integer.parseInt(br.readLine());
+		  int[] arr = new int[n];
+		  String a = br.readLine();
+		  String[] aA = a.split("\\s+");
+		  for(int i=0;i<n;i++){
+		      arr[i] = Integer.parseInt(aA[i]);
+		  }
+		  if(n==2){
+		      System.out.println(Math.max(arr[0],arr[1]));
+		      return;
+		  }
+		  if(n==1){
+		      System.out.println(arr[0]);
+		      return;
+		  }
+		  int max=0,sum=0,i=0,j=-1;
+		  while(i<n-2){
+		  if(arr[i]>arr[i+1] && arr[i]>arr[i+2]){
+		     max = arr[i];
+		     j=i;
+		      i=i+2;
+		  }else if(arr[i+1]>arr[i] && arr[i+1] > arr[i+2]){
+		      max = arr[i+1];
+		      j=i+1;
+		      i = i+3;
+		  }else{
+		      max = arr[i+2];
+		      j=i+2;
+		      i=i+4;
+		  }
+		  sum+=max;
+		 }
+		 //System.out.println("j "+j);
+		 if(j==n-3){
+		     sum+=arr[n-1];
+		 }else if(j==n-4){
+		     sum+=Math.max(arr[n-2],arr[n-1]);
+		 }
+		 System.out.println(sum);
+	 }
+	 }
+******************************************************************
+ void computeLPSArray(String pat, int M, int lps[]) 
+    { 
+        // length of the previous longest prefix suffix 
+        int len = 0; 
+        int i = 1; 
+        lps[0] = 0; // lps[0] is always 0 
+  
+        // the loop calculates lps[i] for i = 1 to M-1 
+        while (i < M) { 
+            if (pat.charAt(i) == pat.charAt(len)) { 
+                len++; 
+                lps[i] = len; 
+                i++; 
+            } 
+            else // (pat[i] != pat[len]) 
+            { 
+                // This is tricky. Consider the example. 
+                // AAACAAAA and i = 7. The idea is similar 
+                // to search step. 
+                if (len != 0) { 
+                    len = lps[len - 1]; 
+  
+                    // Also, note that we do not increment 
+                    // i here 
+                } 
+                else // if (len == 0) 
+                { 
+                    lps[i] = len; 
+                    i++; 
+                } 
+            } 
+        } 
+    } 
+*********************************************************88
+public static boolean isRotated(String s1, String s2){
+        
+        // Your code here
+        s1 = s1+s1;
+        int n=s1.length();
+        int m= s2.length();
+        int[] lsp = new int[m];
+        createLspArray(lsp,s2,m);
+        int i=0,j=0;
+        while(i<n){
+            if(s1.charAt(i) == s2.charAt(j)){
+                i++;
+                j++;
+            }
+            if(j==m){
+                return true;
+            }
+            if(i<n && s1.charAt(i) != s2.charAt(j)){
+                if(j!=0){
+                    j = lsp[j-1];
+                }else{
+                    i++;
+                }
+            }
+        }
+        return false;
+    }
+    static void createLspArray(int[] lsp, String s2, int m){
+        lsp[0] = 0;
+        int i=0,j=1;
+        while(j<m){
+            if(s2.charAt(i) == s2.charAt(j)){
+                i++;
+                lsp[j] = i;
+                j++;
+            }else{
+                if(i!=0){
+                    i=lsp[i-1];
+                }else{
+                    lsp[j] = i; 
+                    j++;
+                }
+            }
+        }
+    }
+ ********************************************************************8
+ public static void solution(String s1, String s2){
+        // Your code here
+        int n=s1.length();
+        int m =s2.length();
+        int min=Integer.MAX_VALUE;
+        for(int i=0;i<m;i++){
+            int j;
+            for(j=0;j<n;j++){
+                if(s1.charAt(j) == s2.charAt(i)){
+                    break;
+                }
+            }
+            if(j!=n && j<min){
+                min = j;
+            }
+        }
+        if(min == Integer.MAX_VALUE){
+            System.out.print("No character present");
+        }else{
+            System.out.print(s1.charAt(min));
+        }
+    }
+********************************************************************************8
+ while(t-->0){
+	     int n = sc.nextInt();
+	     String[] arr = {"2","3","4","5"};
+	     String[] temp = new String[101];
+	     temp[0] = "0";
+	     temp[1] = "2";
+	     temp[2] = "3";
+	     temp[3] = "5";
+	     temp[4] = "7";
+	     if(n<5){
+	         System.out.println(temp[n]);
+	         continue;
+	     }
+	     n = n-4;
+	     int i=5,r=0,j=0,k=1;
+	     while(i<n){
+	         temp[i] = temp[k]+arr[j];
+	         j++;
+	         i++;
+	         if(j==4){
+	             r++;
+	             j=r;
+	             k++;
+	         }
+	     }
+	     System.out.println(temp[i]);
+	 }
+*******************************************************************************************8
+For Implementing LL ----->
+Class Node{
+int data;
+Node next;
+Node(int x){
+data = x;
+next = null;
+}
+}
+***********************************************************************88
+	Node temp = root,prev=null;
+	while(temp.next!=null){
+	    prev = temp;
+	      while(temp.next.data == temp.data){
+	          temp = temp.next;
+	          if(temp==null || temp.next ==null){
+	              break;
+	          }
+	      }
+	      if(temp.next == null){
+	          prev.next =null;
+	          break;
+	      }
+	      prev.next = temp.next;
+	      temp = temp.next;
+	}
+	return root;
+***************************************************************************8
+ int num1 = 0,c1=0;
+        int num2 = 0,c2=0;
+        while(first!=null){
+            num1 += first.data*Math.pow(10,c1++);
+            first = first.next;
+        }
+        while(second!=null){
+            num2 +=second.data*Math.pow(10,c2++);
+            second = second.next;
+        }
+        int sum = num1+num2;
+        Node head = new Node(0);
+        Node new_head = head;
+        while(sum>0){
+            head.next = new Node(sum%10);
+            head = head.next;
+            sum = sum/10;
+        }
+        return new_head.next;
+**********************************************************************************
+static Node segregate(Node head)
+    {
+        // add your code here
+        Node mid = null, start =null, end = null;
+        Node new_head = null,connector1 = null, connector2 = null;
+        while(head!=null){
+            switch(head.data){
+                case 0:
+                     if(new_head==null){
+                         new_head = head;
+                         start = new_head;
+                     }else{
+                    start.next = head;
+                    start = start.next;
+                     }
+                    break;
+                case 1:
+                     if(connector1==null){
+                         connector1 = head;
+                         mid = connector1;
+                     }else{
+                    mid.next = head;
+                    mid = mid.next;
+                     }
+                    break;
+                case 2:
+                if(connector2==null){
+                         connector2 = head;
+                         end = connector2;
+                     }else{
+                    end.next = head;
+                    end = end.next;
+                     }
+                    break;
+            }
+            head = head.next;
+        }
+        if(new_head == null){
+            new_head = connector1;
+            if(new_head == null){
+                new_head = connector2;
+            }else{
+             if(connector2!=null){
+                mid.next = connector2;
+            }
+          }
+        }else{
+            if(connector1 == null){
+                start.next = connector2;
+            }else{
+                start.next = connector1;
+                mid.next = connector2;
+            }
+        }
+       return new_head;
+    }		
+***********************************************************
+ Node copyList(Node head) {
+        // your code here
+        Node chead = new Node(0);
+        Node temp2 = chead.next;
+        Node temp=head;
+        Node copyO = head,temp3 = null;
+        while(temp!=null){
+            temp3 = temp;
+            temp3 = temp3.next;
+            temp2 = new Node(temp.data);
+            temp = temp.next;
+            temp2 = temp2.next;
+        }
+        temp2 = chead.next;
+        temp = head;
+       while(temp!=null){
+           Node next = temp.next;
+           temp.next = temp2;
+           temp2.arb = temp;
+           temp2 = temp2.next;
+           temp =next;
+       }
+       temp2 = chead.next;
+       temp3 = copyO;
+       while(temp2!=null){
+           if(temp2.arb.arb!=null){
+           temp2.arb = temp2.arb.arb.next;
+           }
+           else{
+               temp2.arb = null;
+           }
+           temp2 = temp2.next;
+       }
+       temp = head;
+       while(copyO!=null){
+           temp.next = copyO.next;
+           temp = temp.next;
+           copyO = copyO.next;
+       }
+        return chead;
+    }
+****************************************************888
+ public static String removePair(String str){
+        // your code here
+        Stack<Character> st = new Stack<Character>();
+        st.push(str.charAt(0));
+        StringBuffer sb= new StringBuffer();
+        int count = 0;
+        for(int i=1;i<str.length();i++){
+            if(str.charAt(i)!=st.peek()){
+                count =0;
+                char a ='a';
+                while(!st.isEmpty()){
+                    a = st.pop();
+                    count++;
+                }
+                if(count%2==1){
+                    sb.append(a);
+                }
+            }
+            st.push(str.charAt(i));
+        }
+        count = 0;
+        char a='a';
+        while(!st.isEmpty()){
+            count++;
+            a = st.pop();
+        }
+        if(count%2==1){
+            sb.append(a);
+        }
+        if(sb.length()==0){
+            return "Empty String";
+        }
+        return sb.toString();
+    }
+***********************************************************
+ Stack<Integer> st = new Stack<Integer>();
+        while(!s.isEmpty()){
+            st.push(s.pop());
+        }
+        StringBuffer sb = new StringBuffer();
+        int min=Integer.MAX_VALUE;
+        while(!st.isEmpty()){
+            if(min>st.peek()){
+                min = st.pop();
+            }else{
+                st.pop();
+            }
+            sb.append(min+" ");
+        }
+        String ab="";
+        for(int i=sb.length()-1;i>=0;i--){
+            ab+=sb.charAt(i);
+        }
+        System.out.print(ab.trim());
+**************************************************************8
+public static long getMaxArea(long hist[], long n)  {
+        // your code here
+        Stack<Integer> s = new Stack<Integer>();
+        int i=0;
+        long max_area = 0l;
+        long area;
+        int tp;
+        while(i<n){
+            if(s.isEmpty()|| hist[s.peek()]<=hist[i]){
+                s.push(i++);
+            }else{
+                 tp = s.pop();
+                //s.pop();
+                area = hist[tp]*(s.isEmpty()?i:i-s.peek()-1);
+                if(area>max_area){
+                    max_area = area;
+                }
+            }
+        }
+        while(!s.isEmpty()){
+            tp = s.pop();
+            //s.pop();
+            area = hist[tp]*(s.isEmpty()?i:i-s.peek()-1);
+            if(area>max_area){
+                max_area = area;
+            }
+        }
+        return max_area;
+    }
+*******************************************************************8
+Stack<Long> st = new Stack<Long>();
+        int s[] = new int[n];
+        StringBuffer ab = new StringBuffer();
+        st.push(arr[0]);
+        for(int i=1;i<n;i++){
+            while(!st.isEmpty()&&arr[i]>st.peek()){
+                ab.append(arr[i]+" ");
+                st.pop();
+            }
+            st.push(arr[i]);
+        }
+        ab.append("-1");
+        System.out.print(ab);
+***************************************************************************8
+ if(n==2){
+            if(M[0][1] == 1 && M[1][0] == 0 && M[1][1] ==0){
+                return 1;
+            }
+            if(M[0][0] == 0 && M[0][1] == 0 && M[1][0] ==1){
+                return 0;
+            }
+            return -1;
+        }
+        int i=0;
+        int index = -1,count=0;
+        Stack<Integer> st = new Stack<Integer>();
+        while(i<2){
+        for(int j=0;j<n;j++){
+            if(M[i][j] == 1){
+                st.push(j);
+            }
+        }
+        if(st.isEmpty()){
+            i++;
+        }else if(st.size()==n){
+            return -1;
+           
+        }else{
+            break;
+        }
+        }
+        if(i==2){
+            return -1;
+        }
+       while(!st.isEmpty()){
+            int k=i+1, j=st.pop();
+            count =1;
+            while(k<n){
+                if(k==j){
+                    k++;
+                }else if(M[k][j]==0){
+                    break;
+                }else{
+                    count++;
+                    k++;
+                }
+            }
+            if(count == n-1){
+                return j;
+            }
+            }
+        return -1;
+********************************
+ int getId(int M[][], int n)
+    {
+        // Your code here
+        int i=0;
+        int index = -1;
+        while(i<n){
+        if(M[i][n-1] == 0){
+            int count =1;
+        for(int j=n-2;j>=0;j--){
+            if(M[i][j] == 1){
+               break;
+            }
+            count++;
+        }
+        if(count == n){
+            index = i;
+            break;
+        }
+        }
+         i++;
+        }
+        if(index == -1){
+            return -1;
+        }
+        int j=0,count =0;
+       while(j<n){
+           if(M[j][index] == 0 && j!=index){
+               return -1;
+           }
+            if(j!=index){
+                   count++;
+                }
+             j++;
+            }
+            if(count == n-1){
+                return index;
+            }
+        return -1;
+    }	
+*********************************************************8
+Stack<Integer> s = new Stack<Integer>();
+        while(!q.isEmpty()){
+            s.push(q.remove());
+        }
+        while(!s.isEmpty()){
+            q.add(s.pop());
+        }
+        return q;	
+*********************************************************8
+ if(k<=0){
+          return q;
+      }
+      int a = q.remove();
+      q = modifyQueue(q,k-1);
+      q.add(a);
+      return q;
+*************************************************************8
+   Map<Integer,Integer> map;
+   Queue<Integer> dq;
+    int capacity;
+    int curr_cap;
+    /*Inititalize an LRU cache with size N */
+    public LRUCache(int N) {
+       //Your code here
+       map = new HashMap<Integer,Integer>();
+       capacity = N;
+       curr_cap = 0;
+       dq = new LinkedList<Integer>();
+    }
+    
+    /*Returns the value of the key x if 
+     present else returns -1 */
+    public int get(int x) {
+       //Your code here
+       if(map.containsKey(x)){
+           dq.add(x);
+           return map.get(x);
+       }
+       return -1;
+    }
+    
+    /*Sets the key x with value y in the LRU cache */
+    public void set(int x, int y) {
+       //Your code here
+       if(curr_cap == capacity){
+         map.remove(dq.remove());
+         map.put(x,y);
+       }else{
+       curr_cap++;       
+       map.put(x,y);
+       dq.add(x);
+       }
+    }
+	*************************************************************8
+	 Map<Integer,Integer> map;
+   Deque<Integer> dq;
+    int capacity;
+    /*Inititalize an LRU cache with size N */
+    public LRUCache(int N) {
+       //Your code here
+       map = new HashMap<Integer,Integer>();
+       capacity = N;
+       dq = new LinkedList<Integer>();
+    }
+    
+    /*Returns the value of the key x if 
+     present else returns -1 */
+    public int get(int x) {
+       //Your code here
+       if(map.containsKey(x)){
+           
+         Deque<Integer> q2 = new LinkedList<Integer>();
+           while(dq.peekLast()!=x){
+               q2.addLast(dq.removeLast());
+           }
+           dq.removeLast();
+           while(!q2.isEmpty()){
+               dq.addLast(q2.removeFirst());
+           }
+           dq.addLast(x);
+           return map.get(x);
+       }
+       return -1;
+    }
+    
+    /*Sets the key x with value y in the LRU cache */
+    public void set(int x, int y) {
+       //Your code here
+     if(dq.size() == capacity){
+        map.remove(dq.removeFirst());
+       }
+       map.put(x,y);
+       dq.addLast(x);
+    }
+	***************************************************
+Cpp code for balanced binary tree
+bool isBalancedTree(Node* root, int *h){
+    if(root == NULL){
+        h = 0;
+        return true;
+    }
+    int lh = 0, rh = 0;
+    bool lb = isBalancedTree(root->left,&lh);
+    bool rb = isBalancedTree(root->right,&rh);
+    
+    if(abs(lh-rh)>1){
+        return false;
+    }
+    *h = max(lh,rh)+1;
+    return lb && rb;
+}
+******************************************************8
+ // Your code here
+    Node* left = root->left;
+    Node* right = root->right;
+    cout<<root->data<<" ";
+    while(left!=NULL && right!=NULL){
+       cout<<left->data<<" ";
+       cout<<right->data<<" ";
+       left = left->left;
+       right = right->right;
+    }
+    while(left!=NULL){
+        cout<<left->data<<" ";
+        left = left->left;
+    }
+    while(right!=NULL){
+        cout<<right->data<<" ";
+        right = right->right;
+    }
+**********************************************************8
+ queue<pair<int,Node*>> q;
+   q.push({-1,root});
+   unordered_set<int> uset;
+   while(!q.empty()){
+       pair<int,Node*> temp = q.front();
+       q.pop();
+       if(uset.find(temp.first)==uset.end()&& temp.first<0){
+           cout<<temp.second->data<<" ";
+           uset.insert(temp.first);
+       }
+       if(temp.second->left!=NULL){
+           q.push({temp.first-1,temp.second->left});
+       }
+       if(temp.second->right!=NULL){
+           q.push({temp.first+1,temp.second->right});
+       }
+   }
+ **********************************************************8
+ Left view of a BT ---->
+  queue<Node*> q;
+   q.push(root);
+   while(!q.empty()){
+       int size = q.size();
+       bool first = true;
+       while(size-->0){
+          Node*temp = q.front();
+          q.pop();
+          if(first){
+              cout<<temp->data<<" ";
+              first = false;
+          }
+          if(temp->left!=NULL){
+              q.push(temp->left);
+          }
+          if(temp->right!=NULL){
+              q.push(temp->right);
+          }
+       }
+   }
+ ***********************************************************  
+   // Your Code Here
+   stack<pair<int,Node*>> s;
+   queue<pair<int,Node*>> q;
+   s.push({0,root});
+   while(!s.empty()){
+       pair<int,Node*> temp = s.top();
+	   s.pop();
+	   q.push(temp);
+       if(temp.second->left!=NULL){
+           s.push({temp.first-1,temp.second->left});
+       }
+       if(temp.second->right!=NULL){
+           s.push({temp.first+1,temp.second->right});
+       }
+   }
+   unordered_map<int,Node*> mp;
+    vector<int> g1;
+   while(!s.empty()){
+       pair<int,Node*> temp = s.top();
+       s.pop();
+       if(mp.find(temp.first)==mp.end()){
+           mp.insert(temp);
+           g1.push_back(temp.first);
+       }
+   }
+   sort(g1.begin(),g1.end());
+   for (auto i = g1.begin(); i != g1.end(); ++i) { 
+        cout <<*i<<" "; 
+    } 
+*****************************************************************88
+   //Your code here
+   unordered_map<int,Node*> mp;
+   mp[root->data] = root;
+   queue<Node*> q;
+   q.push(root);
+   while(!q.empty()){
+       Node* temp = q.front();
+       q.pop();
+       if(temp->left!=NULL){
+           q.push(temp->left);
+           mp[temp->left->data] = temp;
+       }
+       if(temp->right!=NULL){
+           q.push(temp->right);
+           mp[temp->right->data] = temp;
+       }
+   }
+   if(n1 == n2){
+       return mp[n1];
+   }
+   while(mp[n1] != mp[n2]){
+       n1 = mp[n1]->data;
+       n2 = mp[n2]->data;
+   }
+   
+   return mp[n1];
+************************************************************************888
+queue<Node *> q1;
+    queue<Node *> q2;
+    q1.push(t1);
+    Node* temp;
+    while(!q1.empty()){
+        temp = q1.front();
+        q1.pop();
+        if(temp == t2){
+           break; 
+        }
+        if(temp->left!=NULL){
+            q1.push(temp->left);
+        }
+        if(temp->right!=NULL){
+            q1.push(temp->right);
+        }
+    }
+    if(q1.empty()){
+        return false;
+    }
+    while(!q1.empty()){
+        q1.pop();
+    }
+    q1.push(temp);
+    q2.push(t2);
+    while(!q1.isEmpty() && !q2.isEmpty()){
+        Node* temp1 = q1.front();
+        q1.pop();
+        Node* temp2 = q2.front();
+        q2.pop();
+        if(temp1!=temp2){
+            return false;
+        }
+        if(temp1->left!=NULL && temp2->left!=NULL){
+            q1.push(temp1->left);
+            q2.push(temp2->left);
+        }
+         if(temp1->right!=NULL && temp2->right!=NULL){
+            q1.push(temp1->right);
+            q2.push(temp2->right);
+        }
+    }
+******************************************************
+   if(head==NULL){
+        return;
+    }
+    Node** tracer = *&root;
+    while(head!=NULL){
+        *tracer = head;
+        if(head->next!=NULL){
+            head = head->next;
+            *tracer->left = head;
+     if(head->next->next!=NULL){
+         head = head->next;
+            *tracer->right = head;
+         }
+        }
+        
+    }
+    Node *tempr = *root;
+    Node *temph = *head;
+    while(head!=NULL){
+        
+    }	
+********************************************************8
+ set<int> s;
+    findPos(root,s,0);
+    if(s.size()%2==0){
+        return false;
+    }
+    int mid = s.size()/2;
+    for(auto i=s.begin();i!=s.end();i++){
+        if(s.find(abs(*i))==s.end()){
+            return false;
+        }
+    }
+    return true;
+**************************
+ queue<pair<int,node*>> q;
+   q.push({0,root});
+   while(!q.empty()){
+       int size = q.size();
+       //pair<int,node*> first = q.front();
+       int ltomax = 0;
+       while(size-->0){
+           pair<int,node*> temp = q.front();
+           q.pop();
+           //cout<<"least to max "<<ltomax<<" temp.first "<<temp.first;
+           
+           ltomax+=temp.first;
+           if(temp.second->left!=NULL){
+               q.push({temp.first-1,temp.second->left});
+           }
+           if(temp.second->right!=NULL){
+               q.push({temp.first+1,temp.second->right});
+           }
+       }
+       if(ltomax!=0){
+           return false;
+       }
+   }
+*************************************************
+Node* maxDiffUtil(Node* root, int &max_diff){
+     if(root == NULL){
+        return NULL;
+    }
+    int dl=0,dr=0;
+    Node* l =maxDiffUtil(root->left,max_diff);
+    Node* r = maxDiffUtil(root->right,max_diff);
+    
+    dl = root->data - l->data;
+    dr = root->data - (r!=NULL?r->data:0);
+    max_diff = max(max_diff,max(dl,dr));
+    return root;
+}   
+*******************************************************8
+Node* findx(Node* root, int x,Node* &prevt){
+    if(root==NULL){
+        return NULL;
+    }
+    if( root ->data == x){
+        return root;
+    }
+    prevt = root;
+    //cout<<prevt->data<<" ";
+    if(root->data > x){
+        findx(root->left,x,prevt);
+    }else{
+        findx(root->right,x,prevt);
+    }
+}
+Node* findInorderSuccessor(Node* node){
+    if(node == NULL){
+        return NULL;
+    }
+    //prev = node;
+    findInorderSuccessor(node->left);
+    if(node->left ==NULL){
+        return node;
+    }
+    findInorderSuccessor(node->right);
+}
+Node *deleteNode(Node *root,  int x)
+{
+    // your code goes here
+    Node* prevt = NULL;
+    Node* temp = findx(root,x,prevt);
+    //cout<<"temp "<<temp->data<<" ";
+    //cout<<"prev "<<prevt->data<<" ";
+    if(temp->right == NULL && temp->left ==NULL){
+         if(prevt->left->data == temp->data){
+            prevt->left = NULL;
+        }else{
+            prevt->right = NULL;
+        }
+        return root;
+    }
+    if(temp->left == NULL || temp->right ==NULL){
+        if(prevt->left->data == temp->data){
+            prevt->left =temp->left!=NULL?temp->left:temp->right;
+        }else{
+            prevt->right = temp->left!=NULL?temp->left:temp->right;
+        }
+        return root;
+    }
+    //Node* prev = temp;
+    Node* toreplace = findInorderSuccessor(temp->right);
+    //cout<<"to replace "<<toreplace->data<<" ";
+    //cout<<"temp "<<temp->data<<" ";
+    //cout<<"temp left "<<temp->left->data<<" ";
+    //cout<<"prev "<<prevt->data<<" ";
+    if(prevt->left->data == temp->data){
+        prevt->left = toreplace;
+    }else{
+        prevt->right = toreplace;
+    }
+    toreplace->left = temp->left;
+    temp->left = NULL;
+    temp->right = NULL;
+    //prev->left = NULL;
+    temp =NULL;
+    return root;
+}
+*******************************************8
+void countSmaller(Node* root,int* max, int x){
+    int thisCount = 0;
+    while(true){
+        if(x<=root->data){
+            root->count++;
+            if(root->left == NULL){
+                root->left = new Node(x);
+                break;
+            }else{
+                root = root->left;
+            }
+        }else{
+            //cout<<"root count "<<root->count<<" ";
+            thisCount+=root->count;
+            if(root->right == NULL){
+                root->right = new Node(x);
+                break;
+            }else{
+                root=root->right;
+            }
+        }
+    }
+   // cout<<"this count "<<thisCount<<" ";
+    if(*max<thisCount){
+        *max = thisCount;
+    }
+}
+*******************************************8
+if(root==NULL){
+        return k;
+    }
+    int diff = -1;
+    diff = abs(root->data - k);
+    if(root->left!=NULL && abs(root->left->data-k)<diff){
+        return maxDiff(root->left,k);
+    }
+    if(root->right!=NULL && abs(root->right->data-k)<diff){
+        return maxDiff(root->right,k);
+    }
+	*********************************************************
+	int maxDiffSoFar(Node* root, int k, int* minSF){
+    if(root==NULL){
+        return k;
+    }
+    int diff = -1;
+    diff = abs(root->data - k);
+    if(diff<*minSF){
+        *minSF = diff;
+    }
+    if(root->left == NULL && root->right ==NULL){
+        return diff;
+    }
+    if(root->left ==NULL){
+       return maxDiffSoFar(root->right,k,minSF); 
+    }
+    if(root->right == NULL){
+       return maxDiffSoFar(root->left,k,minSF);
+    }
+    int ldiff = abs(root->left->data-k);
+    int rdiff = abs(root->right->data-k);
+    if(ldiff<rdiff && root->left->data>=k){
+       return maxDiffSoFar(root->left,k,minSF); 
+    }else{
+       return maxDiffSoFar(root->right,k,minSF);
+    }
+}
+int maxDiff(Node *root, int k)
+{
+    //Your code here
+    int minSF = INT_MAX;
+    maxDiffSoFar(root,k,&minSF);
+    return minSF;
+}
+********************************************************
+Node *correctBST( Node* root )
+{
+    // add code here.
+    stack<Node*> s;
+    s.push(root);
+    Node *temp = root,*prev = NULL;
+    Node* e1 = NULL,*e2 = NULL;
+    while(!s.empty() || temp!=NULL){
+        while(temp!=NULL){
+            s.push(temp);
+            temp = temp->left;
+        }
+        temp = s.top();
+        s.pop();
+        if(prev && temp->data <prev->data){
+            //cout<<"temp "<<temp->data<<" ";
+            //cout<<"prev "<<prev->data<<" ";
+            if(!e1){
+            e1 = prev;
+            }else if(!e2){
+                e2 = temp;
+            }
+        }
+        prev = temp;
+        temp = temp->right;
+    }
+    
+    if(e1 ==NULL || e2 ==NULL){
+        return root;
+    }
+    //cout<<"e1 "<<e1->data;
+    //cout<<" e2 "<<e2->data;
+    int data = e1->data;
+    e1->data = e2->data;
+    e2->data = data;
+    return root;
+    
+}
+******************************
+void insert(Node* root, Node* e1, Node* e2){
+    if(root==NULL){
+        return;
+    }
+    insert(root->left,e1,e2);
+    if(root->left && root->left->data == e1->data){
+        root->left = e2;
+        return;
+    }else if(root->right && root->right->data == e1->data){
+        root->right = e2;
+        return;
+    }
+    if(root->left && root->left->data == e2->data){
+        root->left = e1;
+        return;
+    }else if(root->right && root->right->data == e2->data){
+        root->right = e1;
+        return;
+    }
+    insert(root->right,e1,e2);
+}
+Node *correctBST( Node* root )
+{
+    // add code here.
+    stack<Node*> s;
+    s.push(root);
+    Node *temp = root,*prev = NULL;
+    Node* e1 = NULL,*e2 = NULL;
+    Node *p1 = NULL, *p2 = NULL;
+    while(!s.empty() || temp!=NULL){
+        while(temp!=NULL){
+            s.push(temp);
+            temp = temp->left;
+        }
+        temp = s.top();
+        s.pop();
+        if(prev && temp->data <prev->data){
+            //cout<<"temp "<<temp->data<<" ";
+            //cout<<"prev "<<prev->data<<" ";
+            if(!e1){
+            e1 = prev;
+            }else if(!e2){
+                e2 = temp;
+            }
+        }
+        prev = temp;
+        temp = temp->right;
+    }
+    
+    if(e1 ==NULL || e2 ==NULL){
+        return root;
+    }
+    insert(root,e1,e2);
+    return root;
+    
+}
+***********************************************
+void _getMin(stack<int>s, int localMin){
+    if(s.empty()){
+        return;
+    }
+    int a = s.top();
+    s.pop();
+    if(a<min){
+        min = a;
+    }
+    if(a==min){
+        min = INT_MAX;
+    }
+    _getMin(s,localMin);
+    cout<<min<<" ";
+}
+*********************************************
+BufferedReader br = new BufferedReader(new InputStreamReader(System.in)); 
+	 int t = Integer.parseInt(br.readLine());
+	 while(t-->0){
+	     String brackets = br.readLine();
+	     Stack<Integer> s = new Stack<>();
+	     int count=0;
+	     List<String> sindex = new ArrayList<String>();
+	     for(int i=0;i<brackets.length();i++){
+	         if(brackets.charAt(i) == '('){
+	             s.push(i);
+	         }else if(brackets.charAt(i) == ')' && !s.isEmpty()){
+	             count++;
+	             int a=-1;
+	             while(!s.isEmpty()){
+	                  a = s.pop();
+	             }
+	             sindex.add(a+" "+i);
+	         }
+	     }
+	     System.out.println(count);
+	     for(String a: sindex){
+	         System.out.println(a);
+	     }
+	 }
+	 }
+**************************************************
+ if(i>=heap_size){
+        return;
+    }
+    int deleted = harr[i];
+	harr[i] = harr[heap_size-1];
+	harr[heap_size-1] = 0;
+	heap_size--;
+	if(deleted<harr[i]){
+		MinHeap::MinHeapify(i);
+	}else{
+		while(i>0 && harr[parent(i)]>harr[i]){
+            swap(harr[parent(i)], harr[i]);
+			i = parent(i);
+		}
+	}
+###############################################################
+int parent(int i){
+    return (i-1)/2;
+}
+int left(int i){
+    return 2*i+1;
+}
+int right(int i){
+    return 2*i+2;
+}
+
+void extractMin(int *harr,int n){
+    if(n==1){
+        return;
+    }
+    harr[0] = harr[n-1];
+    harr[n-1] = 0;
+    n--;
+    int i = 0;
+    while(i<n){
+        int l = left(i);
+        int r = right(i);
+        int smallest = i;
+        if(l<n && harr[l]<harr[i]){
+            smallest = l;
+        }
+        if(r<n && harr[r]<harr[smallest]){
+            smallest = r;
+        }
+        if(smallest!=i){
+            swap(harr[smallest],harr[i]);
+            i = smallest;
+        }else{
+            break;
+        }
+    }
+}
+void insert(int* harr,int k,int n){
+    if(n==1){
+        harr[0] = k;
+        return;
+    }
+    harr[n-1] = k;
+    int i = n-1;
+    while(i>0 && harr[parent(i)]>harr[i]){
+        swap(harr[parent(i)],harr[i]);
+        i = parent(i);
+    }
+}
+void kthLargest(int arr[], int n, int k){
+    // your code here
+    int *harr = new int[k];
+    harr[0] = arr[0];
+    for(int i=1;i<k;i++){
+        int j = i;
+        harr[j] = arr[j];
+        while(j>0 && harr[parent(j)]>harr[j]){
+            swap(harr[parent(j)],harr[j]);
+            j = parent(j);
+        }
+    }
+    for(int i=k;i<n;i++){
+        if(arr[i]>harr[0]){
+            extractMin(harr,k);
+            insert(harr,arr[i],k);
+        }
+    }
+    for(int i=k-1;i>=0;i--){
+        cout<<harr[i]<<" ";
+    }
+    cout<<endl;
+}
+###########################################################	
+	unordered_map<int,int> mp;
+ for(int i=0;i<n;i++){
+     //if(mp.find(arr[i])!=mp.end()){
+         mp[arr[i]]++;
+     //}else{
+     //}
+ }
+  vector<pair<int,int>> v;
+  for(auto i= mp.begin();i!=mp.end();i++){
+      v.push_back({i->second,i->first});
+  }
+  sort(v.begin(),v.end());
+  int sum = 0;
+  for(int i=v.size()-1;i>=v.size()-k;i--){
+      //cout<<v[i].first<<" ";
+      sum+=v[i].first;
+  }
+  return sum;
+ *****************************************************
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std;
+bool doesPathExists(vector<int> adj[], int m){
+    static int row[] = {0,-1,0,1};
+    static int col[] = {-1,0,1,0};
+    
+}
+int main() {
+	//code
+	int t;
+	cin>>t;
+	while(t-->0){
+	    int m;
+	    cin>>m;
+	    vector<int> adj[m];
+	    for(int i=0;i<m;i++){
+	        for(int j=0;j<m;j++){
+	            int num;
+	            cin>>num;
+	            adj[i].push_back(num);
+	        }
+	    }
+	    cout<<doesPathExists(adj,m)<<endl;
+	}
+	return 0;
+} 

@@ -1,0 +1,106 @@
+#include <bits/stdc++.h>
+
+#if (__WIN32__ || __WIN64__)
+        #define getch getchar
+#else
+        #define getch getchar_unlocked
+#endif
+#define SEED srand(chrono::duration_cast<chrono::nanoseconds>(chrono::high_resolution_clock::now() - chrono::high_resolution_clock::time_point()).count());
+#define rand() ((rand () << 16) | rand ())
+#define all(T) T.begin (), T.end ()
+#define NAME ""
+
+using namespace std;
+
+typedef long long ll;
+typedef long double ld;
+
+inline void scan (int &very_long_variable_name);
+
+const int inf = (int) 1e9;
+const int mod = (int) 1e9 + 7;
+const int N = (int) 1e5 + 5;
+
+int lf[N], a[N], n, k, q, cnt[2], sleva, fp[N];
+ll s[N];
+
+inline void Solve () {
+        memset (cnt, 0, sizeof cnt); sleva = 1;
+        scan (n); scan (k); scan (q);
+        for (int i = 1; i <= n; i++) {
+                a[i] = getch () - 48;
+                cout<<"a[i]: "<<a[i]<<" ";
+                cnt[a[i]]++;
+                cout<<"cnt[0]: "<<cnt[0]<<" ";
+                cout<<"cn[1]: "<<cnt[1]<<" ";
+                while (cnt[0] > k || cnt[1] > k) {
+                        cnt[a[sleva]]--;
+                        sleva++;
+                }
+                cout<<"sleva: "<<sleva<<" ";
+                lf[i] = sleva;
+                cout<<"lf[i]: "<<lf[i]<<" ";
+                s[i] = i - sleva + 1;
+                cout<<"s[i]: "<<s[i]<<" ";
+                cout<<"\n";
+        }
+        sleva = 1;
+        for (int i = 1; i <= n; i++) {
+                for (; sleva < lf[i]; sleva++) {
+                        fp[sleva] = i - 1;
+                        cout<<"fp[sleva]: "<<fp[sleva]<<" ";
+                }
+        }
+        for (; sleva <= n; sleva++) {
+                fp[sleva] = n;
+                cout<<"fp[sleva]: "<<fp[sleva]<<" ";
+        }
+        cout<<"\n";
+        for (int i = 2; i <= n; i++) {
+                s[i] += s[i - 1];
+        }
+        while (q--) {
+                int L, R;
+                scan (L); scan (R);
+                if (fp[L] >= R) {
+                        int len = R - L + 1;
+                        printf ("%lld\n", len * 1LL * (len + 1) / 2);
+                } else if (fp[L] < L) {
+                        printf ("%lld\n", s[R] - s[L - 1]);
+                } else {
+                        int len = fp[L] - L + 1;
+                        printf ("%lld\n", len * 1LL * (len + 1) / 2 + s[R] - s[fp[L]]);
+                }
+        }
+}
+
+int tests = 1;
+
+int main () {
+	#ifdef FILE
+		freopen (NAME".in", "r", stdin);
+		freopen (NAME".out", "w", stdout);
+	#endif
+
+        scan (tests);
+
+        while (tests--) {
+                Solve ();
+        }
+
+        return 0;
+}
+
+inline void scan (int &very_long_variable_name) {
+        very_long_variable_name = 0;
+        char c = getch ();
+        while (c < '0' || c > '9'){
+                c = getch ();
+        }
+        while (c >= '0' && c <= '9') {
+                very_long_variable_name = (very_long_variable_name << 1) + (very_long_variable_name << 3) + c - '0';
+                c = getch ();
+        }
+}
+
+

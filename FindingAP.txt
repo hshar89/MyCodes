@@ -1,0 +1,109 @@
+#include <bits/stdc++.h>
+using namespace std;
+class Graph{
+	int V;
+	list<int> *adj;
+	public:
+	Graph(int V){
+		this->V = V;
+		adj = new list<int>[V];
+	}
+	void dfs(int s, int parent[], int disc[], int low[], int &time,bool ap[]);
+	void addEdge(int u, int v);
+	int findartipoints();
+};
+void Graph::addEdge(int u, int v){
+	adj[u].push_back(v);
+	adj[v].push_back(u);
+}
+struct edge{
+	int src,dest;
+	edge(int src,int dest){
+		this->src = src;
+		this->dest = dest;
+	}
+	bool operator<(const edge &e1)const{
+		if(src == e1.src){
+			return dest<e1.dest;
+		}
+		return src<e1.src;
+	}
+};
+inline int read()
+{
+	char c;
+	int n = 0;
+	while ((c = getchar_unlocked()) < 48)	;
+	n += (c - '0');
+	while ((c = getchar_unlocked()) >= 48)
+		n = n * 10 + (c - '0');
+	return n;
+}
+
+void Graph::dfs(int s, int parent[], int disc[], int low[], int &time,bool ap[]){
+	disc[s] = low[s] = ++time;
+	int children=0;
+	for(auto it = adj[s].begin();it!=adj[s].end();it++){
+		int v =*it;
+		if(disc[v] == -1){
+			parent[v] = s;
+			dfs(v,parent,disc,low,time,ap);
+			children++;
+			
+			low[s] = min(low[s],low[v]);
+ 
+			if(parent[s] == -1 && children>1){
+				ap[s] = true;
+			}
+			if(parent[s] !=-1 && disc[s]<=low[v]){
+				ap[s]= true;
+			}
+		}else if(v != parent[s]){
+			low[s] = min(low[s],disc[v]);
+		}
+	}
+}
+int Graph::findartipoints(){
+	int time = 0;
+	int disc[V];
+	int low[V];
+	int parent[V];
+	bool ap[V];
+	for(int i=0;i<V;i++){
+		parent[i] = -1;
+		disc[i]=low[i] =-1;
+		ap[i] = false;
+	}
+	for(int i=0;i<V;i++){
+		if(disc[i] == -1){
+			dfs(i,parent,disc,low,time,ap);
+		}
+	}
+	int count=0;
+  for(int i=0;i<V;i++){
+  	if(ap[i]){
+  		count++;
+  	}
+  }
+  return count;
+}
+int main() {
+	// your code goes here
+	int n,m,u,v;
+	while(true){
+		n = read();
+		m = read();
+		if(n==0 && m==0){
+			break;
+		}
+		Graph g(n);
+		for(int i=0;i<m;i++){
+			u= read()-1;
+			v = read()-1;
+			g.addEdge(u,v);
+		}
+		int count = 0;
+		cout<<g.findartipoints()<<"\n";
+	}
+	return 0;
+}

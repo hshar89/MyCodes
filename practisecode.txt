@@ -1,0 +1,410 @@
+<html>
+<body bgcolor='Blue'>
+<p>paragraph</p>
+<p id="GFG"></p>
+<h1 id="var" style="color:black;">GeeksForGeeks</h1> 
+    <h1 id="let" style="color:black;">GeeksForGeeks</h1> 
+    <button id="btn" onclick="colour()">Start</button> 
+    <!-- executing function on button click -->
+	<p id="help">Helpful notes will appear here</p>
+<p>E-mail: <input type="text" id="email" name="email"></p>
+<p>Name: <input type="text" id="name" name="name"></p>
+<p>Age: <input type="text" id="age" name="age"></p>
+<script type="text/javascript">
+/*
+function outer()  
+{ 
+    function create_Closure(val)  
+    { 
+        return function()  
+        { 
+            return val; 
+        } 
+    } 
+    var arr = []; 
+    var i; 
+    for (i = 0; i < 4; i++)  
+    { 
+        arr[i] = create_Closure(i); 
+    } 
+    return arr; 
+} 
+var get_arr = outer(); 
+//console.log('checking for get arr----'+JSON.stringify(get_arr()));
+console.log('checking get arr[]---->'+JSON.stringify(get_arr[0]())); 
+//console.log(get_arr[1]()); 
+//console.log(get_arr[2]()); 
+//console.log(get_arr[3]()); 
+var arc = function rectangle(){
+	var length,breadth;
+	function create(l,w){
+		length =l;
+		breadth = w;
+	}
+	function getArea(){
+		return length*breadth;
+	}
+	function getPerimeter(){
+		return 2*(length+breadth);
+		
+	}
+	var publicD={
+		create: create,
+		getArea : getArea,
+		geterimeter: getPerimeter
+	}
+	return publicD;
+}
+var rec1 = arc();
+rec1.create(8,9);
+	
+	console.log('value printed----'+rec1.getArea());
+//}
+var value = 78;
+var elem = document.getElementById('GFG');
+elem.innerHTML = value;
+//var value;
+function add(a,b,callback){
+	document.write('the value of'+ a +'and '+b+ 'is ${a+b}'+'<br >');
+	callback();
+}
+function display(){
+	document.write('displayed after addition');
+	
+}
+add(4,5,display);
+add(6,45,function disp(){
+	document.write('ye dekho kamal');
+});
+var obj = {name:"test",surname:"aur bhi test", class:"Nhi gya"};
+//alert(obj);
+var abc = 5993;
+document.write(' <br > abc' +abc.toString(2));
+ 
+//***************************************
+function Person(fname, lname) { 
+    // This properties are not visible  
+    // outside the scope of the object  
+      var firstname = fname; 
+      var lastname = lname; 
+      
+    // This function is not visible outside the  
+    // scope of the function 
+    var getdetails_noaccess = function () { 
+        return "First name is = " + firstname + 
+            " Last name is = " + lastname; 
+    }; 
+  
+     // This function is visible outside the  
+    // scope of the function 
+    this.getdetails_access = function () { 
+        return "First name is = " + firstname + 
+            ", Last name is = " + lastname; 
+    }; 
+} 
+var person = new Person('subhas','ghai');
+console.log(person.firstname);
+console.log(person.getdetails_noaccess);
+console.log(person.getdetails_access());
+//***************************************
+
+class person1{
+	constructor(name){
+	this.fname = name;
+	}
+    toString_person(){
+	return 'first name---'+this.fname;
+	}
+	}
+class student extends person1{
+	constructor (sclass,fname){
+		super(fname);
+		this.studyclass = sclass;
+		
+	}
+	toString_student(){
+		return super.toString_person()+' studies in class '+this.studyclass;
+	}
+}
+var student1 = new student('8th','munna');
+console.log(student1.toString_student());
+//*******************************************
+let school = { 
+    name : "City School", 
+    location : "Delhi", 
+    established : 1995, 
+    20 : 1000, 
+    displayinfo : function() { 
+        document.write(this.name + " was established in "
+                    + this.established + " at " + this.location + '<br>') 
+    } 
+} 
+  
+school.displayinfo();
+// Outputs : 1000 
+// using the dot notation will result in an error 
+document.write(school['established']) ; 
+var carnival = new Object();
+carnival.name='dash';
+carnival.group = 'random';
+carnival.displayinfo = function(){
+return this.name+'  '+this.group};
+console.log(carnival.displayinfo());
+let footballers = { 
+    position : "Striker"
+} 
+  
+let footballer1 
+    = Object.create(footballers); 
+  
+    // Output : Striker     
+document.write(footballer1.position);
+
+ let add = { 
+        num : 0, 
+        calc : function() { 
+  
+        // logs the add object 
+        document.write(this + ' ')  
+        thisradom = this;
+        function innerfunc() { 
+            thisradom.num += 1; 
+            let rat = {
+				cat : 10,
+				myFinc: function(){
+					document.write(this.cat+' ');
+				}
+			};
+	     rat.myFinc();
+        // logs the window object 
+        document.write(thisradom + ' ');  
+  
+        return thisradom.num 
+  
+    } return innerfunc(); 
+     } 
+}; 
+  
+// logs NaN 
+document.write(add.calc() + '<br>');  
+  
+// logs NaN 
+document.write(add.calc()); 
+
+let people = function(name, age) { 
+         this.name = name; 
+         this.age = age; 
+  
+    this.displayInfo = function() { 
+       document.write(this.name + " is " + this.age + " years old"); 
+      } 
+    } 
+  
+let person1 
+    = new people('John', 21); 
+
+// logs John is 21 years old 
+person1.displayInfo();
+
+function colour() { 
+  
+            setInterval(function() { 
+  
+                if (document.getElementById('var').style.color == 'black') 
+                    var col1 = 'blue'; 
+                else 
+                    col1 = 'black'; 
+  
+                // setting value of color 1 through var 
+  
+                if (document.getElementById('let').style.color == 'black') { 
+                    var col2 = 'red'; 
+                } else { 
+                    col2 = 'black'; 
+                } 
+  
+                // setting value of color 2 through let 
+  
+                document.getElementById('var').style.color = col1; 
+  
+                document.getElementById('let').style.color = col2; 
+  
+                // changing color of h1 in html 
+            }, 500); 
+  
+        } 
+
+document.write(window.innerWidth+' ');
+document.write(window.innerHeight+' ');
+document.write(location.protocol);
+function lessThan(arr,sDatatType){
+	return arr.some(function(element){
+		document.write(element+' ');
+		return (typeof(element) === sDatatType);
+	});
+}
+var art = [67,56,45,87,34];
+function myFunct(art,passPercent){
+	return art.filter(function(element){
+		return element.passP > passPercent;
+	});
+}
+document.write(myFunct(stu,80));
+
+var stu = [
+    {name:'abc',passP:99},
+	{name:'def',passP:89},
+	{name:'ghi',passP:90}
+];
+
+function filterFnc(arry){
+	return arry.passP > 80;
+}
+document.write(JSON.stringify(stu.filter(filterFnc)));
+var languages = ['C++', 'Java', 'Html', 'Python', 'C']; 
+  
+document.write(languages + "<br>"); 
+  
+// Add 'Julia' and 'Php' after removing 'Html'. 
+var removed = languages.splice(2, 1, 'Julia', 'Php') 
+  
+document.write(languages + "<br>"); 
+document.write(removed + "<br>"); 
+  
+// No Removing only Insertion from 2nd index from the ending 
+languages.splice(-1, 0, 'Pascal') 
+document.write(languages);
+arrTest = [2,67,44,523,60];
+stu.sort(function(a,b){
+	if(a.passP>b.passP)
+	return 1;
+else{
+	return -1;
+}
+});
+document.write(' '+JSON.stringify(stu));
+
+const Person = { 
+    Name: 'John Nash', 
+    Age: 25,	
+}; 
+  
+const handler = { 
+    // target represents the Person while prop represents 
+        // proxy property. 
+    get: function(target, prop) { 
+	    console.log('inside get'+' target '+JSON.stringify(target)+' prop '+prop);
+        if (prop === 'FirstName') { 
+            return target.Name.split(' ')[0]; 
+        } 
+        if (prop === 'LastName') { 
+            return target.Name.split(' ').pop(); 
+        } 
+        else { 
+		console.log('inside else');
+            return Reflect.get(target,prop); 
+        } 
+    } 
+}; 
+  
+const proxy1 = new Proxy(Person, handler); 
+  
+document.write(JSON.stringify(proxy1) + "<br>"); 
+  
+// Though there is no Property as FirstName and LastName,  
+// still we get them as if they were property not function. 
+document.write(proxy1.FirstName + "<br>"); 
+document.write(proxy1.LastName  + "<br>"); 
+// creating an empty map 
+var map1 = new Map(); 
+  
+// adding some elements to the map  
+map1.set("first name", "sumit"); 
+map1.set("last name", "ghosh"); 
+map1.set("website", "geeksforgeeks") 
+ map1.set("friend 1","gourav") 
+ map1.set("friend 2","sourav"); 
+ function print_One(element,key){
+	 console.log('element --->'+element+' '+key);
+ }
+ map1.forEach(print_One);
+ //let brat = map1.entries();
+ for( var a of map1){
+	 console.log('var in for---'+a);
+ }
+ console.log(map1.keys());
+ const car3 = {'color':'red'};
+ const car4 = {'color':'blue'};
+ console.log('##compare'+Object.is(car3,car4));
+ var counterForce = function(){
+	 let counter = 0;
+	 function counterChange(val){
+		 counter += val;
+	 }
+	 return {
+	 increment: function(){
+		 counterChange(1);
+	 },
+	 decrement: function(){
+		 counterChange(-1);
+	 },
+	 value: function(){
+		 return counter;
+	 }
+	 };
+ };
+ var counter1 = new counterForce();
+ counter1.increment();
+ console.log('counter value'+ counter1.value());
+*/
+function showHelpText(helpText){
+	console.log('came in inside'+helpText);
+document.getElementById('help').innerHTML = helpText;	
+}
+function returnHelpText(help){
+	console.log('came in inside'+help);
+	return function(){
+		showHelpText(help);
+	};
+}
+function checkForHelpText(){
+	var helpText = [
+	{'id':'email','value':'Valid Email'},
+		{'id':'age','value':'greater than 18'},
+			{'id':'name','value':'first name only'}
+			];
+ /*for(let i=0;i<helpText.length;i++){
+	 console.log('ky ho rha hai'+helpText[i].id);
+	 document.getElementById(helpText[i].id).onfocus = returnHelpText(helpText[i].value);
+ }
+ helpText.forEach(function(txt){
+	 document.getElementById(txt.id).onfocus = function(){
+		 showHelpText(txt.value);
+	 }
+ });*/
+  for (var i = 0; i < helpText.length; i++) {
+    var item = helpText[i];
+    document.getElementById(item.id).onfocus = function() {
+      showHelpText(item.value);
+    }
+  }
+};
+checkForHelpText();
+function MyObject(name, message) {
+  this.name = name.toString();
+  this.message = message.toString();
+}
+MyObject.prototype.getName = function() {
+  return this.name;
+};
+MyObject.prototype.getMessage = function() {
+  return this.message;
+};
+
+let obj1 = new MyObject('tatti','tu');
+console.log('get name--->'+obj1.getName()); 
+		
+document.bgColor = "yellow";	
+</script>
+</body>
+</html>

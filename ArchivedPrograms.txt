@@ -1,0 +1,73 @@
+*Archived Programs in working condtions*
+
+############################################################
+This is to calculate time to rot by oranges
+0 - > empty space
+1->fresh oranges
+2-> rotten oranges
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std;
+int const MAX = 100;
+bool isSafe(int i, int j, int row, int col, vector<int> adj[]){
+    return i>=0&&(j>=0)&&(i<row)&&(j<col)&&(adj[i][j] ==1);
+}
+int calculatTimeToRot(vector<int> adj[],int r, int c, queue<pair<int,int>> q){
+    static int R[] = {0,-1,0,1};
+	    static int C[] = {-1,0,1,0};
+	    int time = 0;
+	    while(!q.empty()){
+	        int size = q.size();
+	        for(int i=0;i<size;i++){
+	        pair<int,int> temp = q.front();
+	        q.pop();
+	        for(int k=0;k<4;k++){
+	            int a = temp.first+R[k];
+	            int b = temp.second+C[k];
+	           if(isSafe(a,b,r,c,adj)){
+	               adj[a][b] = 2;
+	               q.push({a,b});
+	           } 
+	        }
+	    }
+	    if(q.empty()){
+	        break;
+	    }else{
+	    time++;
+	    }
+	}
+	for(int i=0;i<r;i++){
+	    for(int j=0;j<c;j++){
+	        if(adj[i][j] == 1){
+	            return -1;
+	        }
+	    }
+	}
+	return time;
+}
+int main() {
+	//code
+	int t;
+	cin>>t;
+	while(t-->0)
+	{
+	    int r,c;
+	    cin>>r;
+	    cin>>c;
+	    vector<int>* adj = new vector<int>[r];
+	    queue<pair<int,int>> q;
+	    for(int i=0;i<r;i++){
+	        for(int j=0;j<c;j++){
+	            int num;
+	            cin>>num;
+	            adj[i].push_back(num);
+	            if(num==2){
+	                q.push({i,j});
+	            }
+	        }
+	    }
+	  cout<<calculatTimeToRot(adj,r,c,q)<<endl;  
+	}
+	return 0;
+}
+#######################################################

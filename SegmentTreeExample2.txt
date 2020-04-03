@@ -1,0 +1,93 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long int
+inline int read()
+{
+	char c;
+	int n = 0;
+	while ((c = getchar_unlocked()) < 48);
+	n += (c - '0');
+	while ((c = getchar_unlocked()) >= 48)
+		n = n * 10 + (c - '0');
+	return n;
+}
+ll constructStUtil(int arr[], int ss, int se, ll *st, int si){
+    if(ss ==se){
+        st[si] = arr[ss];
+        return arr[ss];
+    }
+    int mid = ss+(se-ss)/2;
+    st[si] = constructStUtil(arr,ss,mid,st,si*2+1)+constructStUtil(arr,mid+1,se,st,si*2+2);
+
+    return st[si];
+}
+ll* createSegTree(int arr[], int n){
+    //Height of the segment tree
+    int x = (int) ceil((log2(n)));
+    //cout<<"x: "<<x<<" ";
+    //maximum size of segment tree
+    int max_size = 2*(int)pow(2,x)-1;
+    //cout<<"max_size: "<<max_size<<"\n";
+    ll *st = new ll[max_size];
+     constructStUtil(arr,0,n-1,st,0);
+     return st;
+}
+ll getSumUtil(ll *st, int ss, int se, int qs, int qe, int si){
+   if(qs<=ss && qe>=se){
+        return st[si];
+    }
+    if(se<qs || ss>qe){
+        return 0;
+    }
+    int mid = ss + (se-ss)/2;
+    return getSumUtil(st,ss,mid,qs,qe,2*si+1)+getSumUtil(st,mid+1,se,qs,qe,2*si+2);
+}
+int main() {
+	// your code goes here
+	int n,K;
+	n = read();
+	K = read();
+	int arr[n];
+	for(int i=0;i<n;i++){
+	    arr[i] = read();
+	}
+	int leftm[n];
+	int rightm[n];
+	leftm[0]= 0;
+	rightm[n-1]=n-1;
+	for(int i=1;i<n;i++){
+	    int j = i-1;
+	    while(j>=0 && arr[i]<arr[j]){
+	        j--;
+	    }
+	   leftm[i] = j+1;
+	}
+	for(int i=n-2;i>=0;i--){
+	    int j = i+1;
+	    while(j<n && arr[i]<arr[j]){
+	        j++;
+	    }
+	    rightm[i] = j-1; 
+	}
+	ll *st = createSegTree(arr,n);
+	int count=0;
+	for(int i=0;i<n;i++){
+	   int j = leftm[i];
+	   int k = rightm[i];
+	   for(;j<=i;j++){
+	       for(int r=i;r<=k;r++){
+	           if(r>j){
+	              
+	               ll sum = getSumUtil(st,0,n-1,j,r,0);
+	              
+	               if((sum-arr[i])%K == 0){
+	               
+	                   count++;
+	               }
+	           }
+	       }
+	   }
+	}
+	cout<<count<<"\n";
+	return 0;
+}
