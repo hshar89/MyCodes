@@ -1,0 +1,2 @@
+foo.email=user@nocall.com
+foo.team=Royal Challengers

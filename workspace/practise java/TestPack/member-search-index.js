@@ -1,0 +1,1 @@
+memberSearchIndex = [{"p":"TestPack","c":"DocumentingClass","l":"cube(int)"},{"p":"TestPack","c":"DocumentingClass","l":"DocumentingClass()","url":"%3Cinit%3E()"}]
